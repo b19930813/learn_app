@@ -3,4 +3,6 @@ class PagesController < ApplicationController
   end
   def show
   end
+  def createPost
+  end
 end

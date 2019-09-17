@@ -22,7 +22,6 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Container from '@material-ui/core/Container';
 import axios from 'axios'
-import { passCsrfToken } from '../util/helpers'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -58,13 +57,17 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
+
 export default function Navbar() {
-  
-  
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [openRes, setOpenRes] = React.useState(false);
-  const [state, setState] = React.useState(false);
+  const [email,setEmail] = React.useState(false);
+  const [password,setPassword] = React.useState(false);
+  const [passwordConfirm,setPasswordConfirm] = React.useState(false);
+  const formRef = React.createRef();
+
   const handleRegisterOpen = () =>{
     setOpenRes(true);
   }
@@ -79,23 +82,64 @@ export default function Navbar() {
   }
   const handleRegisterSubmit = (event) =>{
     event.preventDefault();
-
     const post = {
-      email: state.email,
-      password: state.password,
-      passwordConfirm: state.passwordConfirm
+        email: email,
+        password: password,
+        passwordconfirm: passwordConfirm
     }
-
+    //console.log(post);
     axios
-      .post('/api/users')
-      .then(response => {
-        console.log(response);
-        console.log(response.data);
+      .post('/api/users',post)
+      .then(response =>{
+          //console.log(response);
+          //console.log(response.data);
+          if(response.data == "ok"){
+            alert('註冊成功，畫面即將跳轉...');
+          }
+          else{
+            alert('發生不明錯誤...');
+          }
       })
   }
+
+  const validate = () =>{
+    const form = formRef.current;
+
+    if(form.checkValidity()){
+      return true;
+    }
+    else {
+      const form = formRef.current;
+
+      for (let i = 0; i < form.elements.length; i++) {
+        const element = form.elements[i];
+
+        if (element.tagName !== 'button' && element.willValidate && !element.validity.valid) {
+          if (element.validity.valueMissing) {
+            setErrMsg({ [element.name]: element.validationMessage });
+          } else {
+            setErrMsg({ [element.name]: element.title });
+          }
+        }
+      }
+      return false;
+  }
+};
   
+
+
   const handleChange = (event) =>{
-    setState({ [event.target.name]: event.target.value});
+    switch(event.target.name) {
+      case 'email':
+      setEmail(event.target.value);
+      break;
+      case 'password':
+      setPassword(event.target.value);
+      break;
+      case 'passwordConfirm':
+      setPasswordConfirm(event.target.value);
+      break;
+    }
   }
   return (
     <div className={classes.root}>
@@ -202,6 +246,8 @@ export default function Navbar() {
                   variant="outlined"
                   required
                   fullWidth
+                  pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
+                  title='請輸入正確的Email'
                   id="email"
                   label="Email"
                   name="email"
@@ -215,6 +261,7 @@ export default function Navbar() {
                   required
                   fullWidth
                   name="password"
+                  minLength='8'
                   label="密碼"
                   type="password"
                   id="password"
@@ -228,6 +275,7 @@ export default function Navbar() {
                   required
                   fullWidth
                   name="passwordConfirm"
+                  minLength='8'
                   label="確認密碼"
                   type="password"
                   id="passwordConfirm"
