@@ -21,7 +21,17 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Container from '@material-ui/core/Container';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 import axios from 'axios'
+
+
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -55,6 +65,18 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
   },
+  button: {
+    border: 0,
+    color: 'white',
+    height: 60,
+    padding: '0 30px',
+  },
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
 }));
 
 
@@ -66,8 +88,74 @@ export default function Navbar() {
   const [email,setEmail] = React.useState(false);
   const [password,setPassword] = React.useState(false);
   const [passwordConfirm,setPasswordConfirm] = React.useState(false);
+  const [state,setState] = React.useState({left: false});
+  const toggleDrawer = (side,open) => event => {
+    if (event && event.type === 'keydown' && (event.key ==='Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState({...state, [side]: open});
+  };
+
+  const sideList = () => (
+    <div
+      className={classes.list}
+      role="presentation"
+      onClick={handleShow}
+      onKeyDown={toggleDrawer("left", false)}
+    >
+      <List>
+      {['學習方針', '日語學習', '單字記憶', '我的單字本'].map((text, index) => (
+          <ListItem button key={text} >
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+      {['登入', '註冊'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
+
+  // const fullList = () => (
+  //   <div
+  //     className={classes.fullList}
+  //     role="presentation"
+  //     onClick={toggleDrawer("left", false)}
+  //     onKeyDown={toggleDrawer("left", false)}
+  //   >
+  //     <List>
+  //       {['學習方針', '日語學習', '單字記憶', '我的單字本'].map((text, index) => (
+  //         <ListItem button key={text}>
+  //           <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+  //           <ListItemText primary={text} />
+  //         </ListItem>
+  //       ))}
+  //     </List>
+  //     <Divider />
+  //     <List>
+  //       {['登入', '註冊'].map((text, index) => (
+  //         <ListItem button key={text}>
+  //           <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+  //           <ListItemText primary={text} />
+  //         </ListItem>
+  //       ))}
+  //     </List>
+  //   </div>
+  // );
+
   const formRef = React.createRef();
 
+  const handleShow = (e) =>{
+     console.log(e.target.);
+  }
   const handleRegisterOpen = () =>{
     setOpenRes(true);
   }
@@ -79,6 +167,9 @@ export default function Navbar() {
   }
   const handleClose = () =>{
     setOpen(false);
+  }
+  const handleMenuButton = () =>{
+
   }
   const handleRegisterSubmit = (event) =>{
     event.preventDefault();
@@ -102,30 +193,6 @@ export default function Navbar() {
       })
   }
 
-  const validate = () =>{
-    const form = formRef.current;
-
-    if(form.checkValidity()){
-      return true;
-    }
-    else {
-      const form = formRef.current;
-
-      for (let i = 0; i < form.elements.length; i++) {
-        const element = form.elements[i];
-
-        if (element.tagName !== 'button' && element.willValidate && !element.validity.valid) {
-          if (element.validity.valueMissing) {
-            setErrMsg({ [element.name]: element.validationMessage });
-          } else {
-            setErrMsg({ [element.name]: element.title });
-          }
-        }
-      }
-      return false;
-  }
-};
-  
 
 
   const handleChange = (event) =>{
@@ -145,12 +212,21 @@ export default function Navbar() {
     <div className={classes.root}>
       <AppBar position="fixed" style={{"backgroundColor":"#00AA88"}}>
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton edge="start" className={classes.menuButton} onClick = {toggleDrawer('left', true)} color="inherit" aria-label="menu">
+        <SwipeableDrawer
+        open={state.left}
+        onClose={toggleDrawer('left', false)}
+        onOpen={toggleDrawer('left', true)}
+      >
+        {sideList('left')}
+      </SwipeableDrawer>
+      
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            超猛田卷日語學習網
+            田卷日語
           </Typography>
+          
           <Button color="inherit" onClick = {handleLoginOpen}>登入</Button>
          
           <Button color="inherit" onClick = {handleRegisterOpen}>註冊</Button>

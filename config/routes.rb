@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
+  devise_for :models
+  devise_for :managers
+  devise_for :learn_users
   root "pages#index" 
+
+
   scope  path: "frankgogo" do
     resources :users
   end
