@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Vocabularies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Level</th>
+      <th>Jpvocabulary</th>
+      <th>Katakana</th>
+      <th>Cnvocabulary</th>
+      <th>Jpsentence</th>
+      <th>Cnsentence</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vocabularies.each do |vocabulary| %>
+      <tr>
+        <td><%= vocabulary.level %></td>
+        <td><%= vocabulary.jpVocabulary %></td>
+        <td><%= vocabulary.katakana %></td>
+        <td><%= vocabulary.cnVocabulary %></td>
+        <td><%= vocabulary.jpSentence %></td>
+        <td><%= vocabulary.cnSentence %></td>
+        <td><%= link_to 'Show', vocabulary %></td>
+        <td><%= link_to 'Edit', edit_vocabulary_path(vocabulary) %></td>
+        <td><%= link_to 'Destroy', vocabulary, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Vocabulary', new_vocabulary_path %>

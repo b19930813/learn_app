@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  level: 1
+  jpVocabulary: MyString
+  katakana: MyString
+  cnVocabulary: MyString
+  jpSentence: MyString
+  cnSentence: MyString
+
+two:
+  level: 1
+  jpVocabulary: MyString
+  katakana: MyString
+  cnVocabulary: MyString
+  jpSentence: MyString
+  cnSentence: MyString

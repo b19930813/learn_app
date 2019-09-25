@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Level:</strong>
+  <%= @vocabulary.level %>
+</p>
+
+<p>
+  <strong>Jpvocabulary:</strong>
+  <%= @vocabulary.jpVocabulary %>
+</p>
+
+<p>
+  <strong>Katakana:</strong>
+  <%= @vocabulary.katakana %>
+</p>
+
+<p>
+  <strong>Cnvocabulary:</strong>
+  <%= @vocabulary.cnVocabulary %>
+</p>
+
+<p>
+  <strong>Jpsentence:</strong>
+  <%= @vocabulary.jpSentence %>
+</p>
+
+<p>
+  <strong>Cnsentence:</strong>
+  <%= @vocabulary.cnSentence %>
+</p>
+
+<%= link_to 'Edit', edit_vocabulary_path(@vocabulary) %> |
+<%= link_to 'Back', vocabularies_path %>

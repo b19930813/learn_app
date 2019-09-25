@@ -21,7 +21,6 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Container from '@material-ui/core/Container';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -30,7 +29,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import axios from 'axios'
-
+import Drawer from '@material-ui/core/Drawer';
 
 
 const useStyles = makeStyles(theme => ({
@@ -79,6 +78,30 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const SideList = props => {
+  const { toggleDrawer, changePage, side } = props;
+  return (
+    <div
+      className={useStyles.list}
+      role="presentation"
+      onClick={toggleDrawer(side, false)}
+      onKeyDown={toggleDrawer(side, false)}
+    >
+      <List>
+      {['日語學習', '單字記憶', '我的單字本','我的學習計畫'].map((text, index) => (
+          <ListItem button key={text} onClick={() => changePage(text)}>
+            <ListItemIcon>
+              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+    </div>
+  );
+};
+
 
 
 export default function Navbar() {
@@ -88,73 +111,53 @@ export default function Navbar() {
   const [email,setEmail] = React.useState(false);
   const [password,setPassword] = React.useState(false);
   const [passwordConfirm,setPasswordConfirm] = React.useState(false);
-  const [state,setState] = React.useState({left: false});
-  const toggleDrawer = (side,open) => event => {
-    if (event && event.type === 'keydown' && (event.key ==='Tab' || event.key === 'Shift')) {
+  const [state, setState] = React.useState({
+    left: false,
+  });
+  const toggleDrawer = (side, open) => event => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
-    setState({...state, [side]: open});
+    setState({ ...state, [side]: open });
   };
 
-  const sideList = () => (
+
+ 
+  const fullList = side => (
     <div
-      className={classes.list}
+      className={classes.fullList}
       role="presentation"
-      onClick={handleShow}
-      onKeyDown={toggleDrawer("left", false)}
+      onClick={toggleDrawer(side, false)}
+      onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-      {['學習方針', '日語學習', '單字記憶', '我的單字本'].map((text, index) => (
-          <ListItem button key={text} >
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-      {['登入', '註冊'].map((text, index) => (
+        {['日語學習', '單字記憶', '我的單字本','我的學習計畫'].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
+      <Divider />
     </div>
   );
 
-  // const fullList = () => (
-  //   <div
-  //     className={classes.fullList}
-  //     role="presentation"
-  //     onClick={toggleDrawer("left", false)}
-  //     onKeyDown={toggleDrawer("left", false)}
-  //   >
-  //     <List>
-  //       {['學習方針', '日語學習', '單字記憶', '我的單字本'].map((text, index) => (
-  //         <ListItem button key={text}>
-  //           <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-  //           <ListItemText primary={text} />
-  //         </ListItem>
-  //       ))}
-  //     </List>
-  //     <Divider />
-  //     <List>
-  //       {['登入', '註冊'].map((text, index) => (
-  //         <ListItem button key={text}>
-  //           <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-  //           <ListItemText primary={text} />
-  //         </ListItem>
-  //       ))}
-  //     </List>
-  //   </div>
-  // );
-
   const formRef = React.createRef();
-
+  const transPage = (page) =>{
+    switch(page){
+      case '日語學習':
+      
+      break;
+      case '單字記憶':
+      break;
+      case '我的單字本':
+      break;
+      case '我的學習計畫':
+      break;
+    }
+  }
   const handleShow = (e) =>{
-     console.log(e.target.);
+    console.log(e);
   }
   const handleRegisterOpen = () =>{
     setOpenRes(true);
@@ -213,14 +216,7 @@ export default function Navbar() {
       <AppBar position="fixed" style={{"backgroundColor":"#00AA88"}}>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} onClick = {toggleDrawer('left', true)} color="inherit" aria-label="menu">
-        <SwipeableDrawer
-        open={state.left}
-        onClose={toggleDrawer('left', false)}
-        onOpen={toggleDrawer('left', true)}
-      >
-        {sideList('left')}
-      </SwipeableDrawer>
-      
+         
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
@@ -386,6 +382,13 @@ export default function Navbar() {
           </Button>
         </DialogActions>
       </Dialog>
+      <Drawer open={state.left} onClose={toggleDrawer('left', false)}>
+      <SideList
+          changePage={pageName => transPage(pageName)}
+          toggleDrawer={toggleDrawer}
+          side="left"
+        />
+          </Drawer>
     </div>
   );
 }

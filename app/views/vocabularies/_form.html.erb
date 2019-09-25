@@ -1,0 +1,47 @@
+<%= form_with(model: vocabulary, local: true) do |form| %>
+  <% if vocabulary.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(vocabulary.errors.count, "error") %> prohibited this vocabulary from being saved:</h2>
+
+      <ul>
+      <% vocabulary.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :level %>
+    <%= form.number_field :level %>
+  </div>
+
+  <div class="field">
+    <%= form.label :jpVocabulary %>
+    <%= form.text_field :jpVocabulary %>
+  </div>
+
+  <div class="field">
+    <%= form.label :katakana %>
+    <%= form.text_field :katakana %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cnVocabulary %>
+    <%= form.text_field :cnVocabulary %>
+  </div>
+
+  <div class="field">
+    <%= form.label :jpSentence %>
+    <%= form.text_field :jpSentence %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cnSentence %>
+    <%= form.text_field :cnSentence %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
