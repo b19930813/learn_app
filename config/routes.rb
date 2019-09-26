@@ -14,12 +14,16 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     resources :users, only: [:index, :create]
     resources :posts, only: [:index, :create]
+    resources :vocabularies, only: [:index]
   end
   # test ruotes 
   get 'pages/index'
   get 'pages/show', to: "pages#show"
   get "pages/createPost"
-  get 'pages/learnJP'
+  get 'learnJP', to: "pages#learnJP"
+  get 'learnVocabulary', to: "pages#learnVocabulary"
+  get 'myVocabulary', to: "pages#myVocabulary"
+  get 'myPlan', to: "pages#myPlan"
   get 'pages/learnVocabulary'
   get 'pages/myVocabulary'
   get 'pages/myPlan'

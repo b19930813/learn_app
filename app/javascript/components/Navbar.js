@@ -1,4 +1,5 @@
 import React from 'react';
+import { Router, Route, hashHistory } from 'react-router'
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -88,7 +89,7 @@ const SideList = props => {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-      {['日語學習', '單字記憶', '我的單字本','我的學習計畫'].map((text, index) => (
+      {['日語學習', '必背單字', '我的單字本','我的學習計畫'].map((text, index) => (
           <ListItem button key={text} onClick={() => changePage(text)}>
             <ListItemIcon>
               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -97,11 +98,27 @@ const SideList = props => {
           </ListItem>
         ))}
       </List>
-      <Divider />
     </div>
   );
 };
 
+const transPage = (page) =>{
+  
+  switch(page){
+    case '日語學習':
+      document.location.href = "learnJP";
+    break;
+    case '必背單字':
+      document.location.href = "learnVocabulary";
+    break;
+    case '我的單字本':
+      document.location.href = "myVocabulary";
+    break;
+    case '我的學習計畫':
+      document.location.href = "myPlan";
+    break;
+  }
+}
 
 
 export default function Navbar() {
@@ -131,31 +148,18 @@ export default function Navbar() {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        {['日語學習', '單字記憶', '我的單字本','我的學習計畫'].map((text, index) => (
+        {['日語學習', '必背單字', '我的單字本','我的學習計畫'].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
-      <Divider />
     </div>
   );
 
   const formRef = React.createRef();
-  const transPage = (page) =>{
-    switch(page){
-      case '日語學習':
-      
-      break;
-      case '單字記憶':
-      break;
-      case '我的單字本':
-      break;
-      case '我的學習計畫':
-      break;
-    }
-  }
+
   const handleShow = (e) =>{
     console.log(e);
   }
