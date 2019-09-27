@@ -69,6 +69,6 @@ class VocabulariesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def vocabulary_params
-      params.require(:vocabulary).permit(:level, :jpVocabulary, :katakana, :cnVocabulary, :jpSentence, :cnSentence)
+      params.require(:vocabulary).permit(:level, :jpVocabulary, :katakana, :cnVocabulary, :jpSentence, :cnSentence, :pos)
     end
 end

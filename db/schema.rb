@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_25_091959) do
+ActiveRecord::Schema.define(version: 2019_09_27_022302) do
 
   create_table "learn_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2019_09_25_091959) do
     t.string "cnVocabulary"
     t.string "jpSentence"
     t.string "cnSentence"
+    t.string "pos"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

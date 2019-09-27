@@ -7,6 +7,7 @@ class CreateVocabularies < ActiveRecord::Migration[5.2]
       t.string :cnVocabulary
       t.string :jpSentence
       t.string :cnSentence
+      t.string :pos
 
       t.timestamps
     end

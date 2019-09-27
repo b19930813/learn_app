@@ -17,7 +17,7 @@ class VocabulariesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create vocabulary" do
     assert_difference('Vocabulary.count') do
-      post vocabularies_url, params: { vocabulary: { cnSentence: @vocabulary.cnSentence, cnVocabulary: @vocabulary.cnVocabulary, jpSentence: @vocabulary.jpSentence, jpVocabulary: @vocabulary.jpVocabulary, katakana: @vocabulary.katakana, level: @vocabulary.level } }
+      post vocabularies_url, params: { vocabulary: { cnSentence: @vocabulary.cnSentence, cnVocabulary: @vocabulary.cnVocabulary, jpSentence: @vocabulary.jpSentence, jpVocabulary: @vocabulary.jpVocabulary, katakana: @vocabulary.katakana, level: @vocabulary.level, pos: @vocabulary.pos } }
     end
 
     assert_redirected_to vocabulary_url(Vocabulary.last)
@@ -34,7 +34,7 @@ class VocabulariesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update vocabulary" do
-    patch vocabulary_url(@vocabulary), params: { vocabulary: { cnSentence: @vocabulary.cnSentence, cnVocabulary: @vocabulary.cnVocabulary, jpSentence: @vocabulary.jpSentence, jpVocabulary: @vocabulary.jpVocabulary, katakana: @vocabulary.katakana, level: @vocabulary.level } }
+    patch vocabulary_url(@vocabulary), params: { vocabulary: { cnSentence: @vocabulary.cnSentence, cnVocabulary: @vocabulary.cnVocabulary, jpSentence: @vocabulary.jpSentence, jpVocabulary: @vocabulary.jpVocabulary, katakana: @vocabulary.katakana, level: @vocabulary.level, pos: @vocabulary.pos } }
     assert_redirected_to vocabulary_url(@vocabulary)
   end
 

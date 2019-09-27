@@ -20,6 +20,7 @@ class VocabulariesTest < ApplicationSystemTestCase
     fill_in "Jpvocabulary", with: @vocabulary.jpVocabulary
     fill_in "Katakana", with: @vocabulary.katakana
     fill_in "Level", with: @vocabulary.level
+    fill_in "Pos", with: @vocabulary.pos
     click_on "Create Vocabulary"
 
     assert_text "Vocabulary was successfully created"
@@ -36,6 +37,7 @@ class VocabulariesTest < ApplicationSystemTestCase
     fill_in "Jpvocabulary", with: @vocabulary.jpVocabulary
     fill_in "Katakana", with: @vocabulary.katakana
     fill_in "Level", with: @vocabulary.level
+    fill_in "Pos", with: @vocabulary.pos
     click_on "Update Vocabulary"
 
     assert_text "Vocabulary was successfully updated"
