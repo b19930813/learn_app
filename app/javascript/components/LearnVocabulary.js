@@ -57,16 +57,16 @@ const MyExpand = props => {
     >
       <Typography className={classes.heading}>
         <span>
-        {vocabularies.jpVocabulary} : 
+        {vocabularies.jpVocabulary}
         </span>
         <span>
-        [{vocabularies.katakana}] / 
+        [{vocabularies.katakana}] :
+        </span>
+        <span>
+        {vocabularies.cnVocabulary} /
         </span>
         <span>
         {vocabularies.pos}  
-        </span>
-        <span>
-        N{vocabularies.level}
         </span>
         </Typography>
     </ExpansionPanelSummary>
@@ -96,44 +96,70 @@ const MyExpand = props => {
   }
 };
 
+var allVocabularies = null;
+var jpCheck = new RegExp("^[\u0800-\\u4e00]*$"); 
 export default function LearnVocabulary() {
   const classes = useStyles();
   const [values, setValues] = React.useState({
     level: '',
-    ops: '',
+    input: '',
   });
  const [state,setState] = React.useState({
   vocabularies: []
  });
+  const [search,setSearch] = React.useState(0);
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
+    values.level = 0;
+   
     axios
       .get('/api/vocabularies')
       .then(response => {
+
         setState({ vocabularies: response.data.vocabularies });
+        allVocabularies = response.data.vocabularies;
       })
       
   }, []);
 
 
   const handleChange = event => {
+ 
     setValues(oldValues => ({
       ...oldValues,
       [event.target.name]: event.target.value,
     }));
-    console.log(event.target.value);
-    axios
-    .get('/api/vocabularies',{
-      params:{
-        level: event.target.value
-      }
-    })
-    .then(response => {
-      setState({ vocabularies: response.data.vocabularies });
-    })
+   if(search==''){
+    setState({vocabularies: allVocabularies.filter(vocabulary => {
+      if(event.target.value ==0) return allVocabularies;
+      return vocabulary.level == event.target.value;
+    })});
+  }
+  else{
+    setState({vocabularies: allVocabularies.filter(vocabulary => {
+      if(event.target.value ==0) return vocabulary.cnVocabulary.includes(search)||vocabulary.katakana.includes(search);
+      return vocabulary.level == event.target.value && (vocabulary.katakana.includes(search)==true||vocabulary.cnVocabulary.includes(search));
+    })});
+  }
   };
-
+  
+  const handleSearch = event =>{
+    setSearch(event.target.value);
+     if(event.target.value.length==0){
+       setState({vocabularies: allVocabularies.filter(vocabulary => {
+        if(values.level ==0) return allVocabularies;
+        return vocabulary.level == values.level;
+      })});
+     }
+     else{
+       var temp = allVocabularies.filter(vocabulary => {
+          if(values.level == 0) return vocabulary.katakana.includes(event.target.value)||vocabulary.cnVocabulary.includes(event.target.value);
+          return (vocabulary.katakana.includes(event.target.value)||vocabulary.cnVocabulary.includes(event.target.value)) && values.level == vocabulary.level;
+       })
+       setState({vocabularies: temp});
+     }
+  }
   return (
     <div>
     <form className={classes.root} autoComplete="off">
@@ -172,12 +198,14 @@ export default function LearnVocabulary() {
       <FormControl className={classes.margin} >
         <InputLabel>查詢單字</InputLabel>
         <Input
+          
           id="input-with-icon-adornment"
           startAdornment={
             <InputAdornment position="start">
               <SearchIcon />
             </InputAdornment>
           }
+          onChange = {handleSearch}
         />
       </FormControl>
     </form>

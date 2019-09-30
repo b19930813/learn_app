@@ -103,7 +103,7 @@ const SideList = props => {
 };
 
 const transPage = (page) =>{
-  
+  console.log(page);
   switch(page){
     case '日語學習':
       document.location.href = "learnJP";
@@ -160,9 +160,6 @@ export default function Navbar() {
 
   const formRef = React.createRef();
 
-  const handleShow = (e) =>{
-    console.log(e);
-  }
   const handleRegisterOpen = () =>{
     setOpenRes(true);
   }
@@ -177,6 +174,9 @@ export default function Navbar() {
   }
   const handleMenuButton = () =>{
 
+  }
+  const handleIndex = () =>{
+    document.location.href = "/";
   }
   const handleRegisterSubmit = (event) =>{
     event.preventDefault();
@@ -203,6 +203,7 @@ export default function Navbar() {
 
 
   const handleChange = (event) =>{
+    console.log(event.target.name);
     switch(event.target.name) {
       case 'email':
       setEmail(event.target.value);
@@ -223,7 +224,7 @@ export default function Navbar() {
          
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={classes.title}  onClick = {handleIndex}>
             田卷日語
           </Typography>
           

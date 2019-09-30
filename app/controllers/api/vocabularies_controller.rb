@@ -1,8 +1,8 @@
 module API
     class Api::VocabulariesController < ApplicationController
         def index
-            vocabularies = Vocabulary.all
-              puts params['level']
+              #puts current_learn_user['id']
+              vocabularies = Vocabulary.all
               render json: { vocabularies: vocabularies }
         end
     end
