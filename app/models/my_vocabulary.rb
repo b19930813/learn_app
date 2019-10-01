@@ -1,0 +1,2 @@
+class MyVocabulary < ApplicationRecord
+end

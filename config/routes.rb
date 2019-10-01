@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :create]
     resources :posts, only: [:index, :create]
     resources :vocabularies, only: [:index]
+    resources :my_vocabularies
   end
   # test ruotes 
   get 'pages/index'
