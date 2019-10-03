@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_01_092322) do
+ActiveRecord::Schema.define(version: 2019_10_02_084435) do
 
   create_table "learn_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -49,14 +49,16 @@ ActiveRecord::Schema.define(version: 2019_10_01_092322) do
   end
 
   create_table "my_vocabularies", force: :cascade do |t|
-    t.integer "level"
-    t.string "jpVocabulary"
-    t.string "katakana"
-    t.string "cnVocabulary"
-    t.string "jpSentence"
-    t.string "cnSentence"
-    t.string "pos"
     t.integer "learn_user_id"
+    t.integer "vocabulary_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["learn_user_id"], name: "index_my_vocabularies_on_learn_user_id"
+    t.index ["vocabulary_id"], name: "index_my_vocabularies_on_vocabulary_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

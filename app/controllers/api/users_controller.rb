@@ -13,8 +13,14 @@ module API
             render plain: 'password error'         
         end
     end
+
     def index
         @users = User.all
+        render json: { users: @users }
+    end
+
+    def destroy
+        puts 'run this'
     end
   end
 end

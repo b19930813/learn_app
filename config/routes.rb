@@ -12,9 +12,9 @@ Rails.application.routes.draw do
   end
   
   namespace :api, defaults: { format: 'json' } do
-    resources :users, only: [:index, :create]
-    resources :posts, only: [:index, :create]
-    resources :vocabularies, only: [:index]
+    resources :users, only: [:index, :create, :destroy]
+    resources :posts
+    resources :vocabularies, only: [:index, :destroy]
     resources :my_vocabularies
   end
   # test ruotes 

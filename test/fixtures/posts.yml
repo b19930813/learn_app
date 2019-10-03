@@ -1,9 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  learn_user: one
-  vocabulary: one
+  title: MyString
 
 two:
-  learn_user: two
-  vocabulary: two
+  title: MyString

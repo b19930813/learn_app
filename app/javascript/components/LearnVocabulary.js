@@ -47,8 +47,11 @@ const useStyles = makeStyles(theme => ({
 const MyExpand = props => {
 
   const handleAdd = (vID) => event =>{
+    const post = {
+      vocabularyID: vID
+    }
     axios
-    .get('/api/my_vocabularies')
+    .post('/api/my_vocabularies',post)
     .then(response => {
       console.log(response);
     })
@@ -85,8 +88,8 @@ const MyExpand = props => {
             [中譯]:{vocabularies.cnSentence}
             <br />
             <Button variant="contained" color="primary" className={classes.button} onClick = {handleAdd(vocabularies.id)}>
-              Add
-      </Button>
+               Add
+            </Button>
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>)
