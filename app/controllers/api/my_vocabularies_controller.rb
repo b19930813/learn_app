@@ -2,7 +2,6 @@ module API
     class Api::MyVocabulariesController < ApplicationController
         rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
         def index
-            puts "Search V = #{params['searchV']}"
             if learn_user_signed_in?
                 #回傳該使用者的單字
                 if params['ID'] == '0'
@@ -21,17 +20,24 @@ module API
                   end
                   render json: { vocabularies: vocabularies }
             else
-                render json: {state: 404}
+                render json: {state: 401}
             end
                         
         end
         def create
+            #user login
+            if learn_user_signed_in?
             @myVocabulary = MyVocabulary.new(learn_user_id: current_learn_user['id'], vocabulary_id: params['vocabularyID'])
              if @myVocabulary.save
                 render json: { state: 200}
              else
-                render json: { state: 404}
+                #save fail!
+                render json: { state: 400 }
              end
+            else
+                #user is not login
+                render json: { state: 401}
+            end
         end
         
         def destroy

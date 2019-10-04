@@ -44,62 +44,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MyExpand = props => {
-
-  const handleAdd = (vID) => event =>{
-    const post = {
-      vocabularyID: vID
-    }
-    axios
-    .post('/api/my_vocabularies',post)
-    .then(response => {
-      console.log(response);
-    })
-  }
-
-  const classes = useStyles();
-    let lists = props.data.state.vocabularies.map((vocabularies, i) =>
-      <ExpansionPanel key={vocabularies.id}>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={classes.heading}>
-            <span>
-              {vocabularies.jpVocabulary}
-            </span>
-            <span>
-              [{vocabularies.katakana}] :
-        </span>
-            <span>
-              {vocabularies.cnVocabulary} /
-        </span>
-            <span>
-              {vocabularies.pos}
-            </span>
-          </Typography>
-        </ExpansionPanelSummary>
-        <Divider />
-        <ExpansionPanelDetails>
-          <Typography>
-            [例句]:{vocabularies.jpSentence}
-            <br />
-            [中譯]:{vocabularies.cnSentence}
-            <br />
-            <Button variant="contained" color="primary" className={classes.button} onClick = {handleAdd(vocabularies.id)}>
-               Add
-            </Button>
-          </Typography>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>)
-    return (
-      <div>
-        {lists}
-      </div>
-    )
-};
-
 export default function LearnVocabulary() {
   const classes = useStyles();
   const [values, setValues] = React.useState({
@@ -126,9 +70,29 @@ export default function LearnVocabulary() {
       .then(response => {
         setState({ vocabularies: response.data.vocabularies });
       })
-
+      
   }, []);
 
+  
+  const handleAdd = (vID) => event =>{
+    
+    const post = {
+      vocabularyID: vID
+    }
+    axios
+    .post('/api/my_vocabularies',post)
+    .then(response => {
+      if(response.data.state == 200){
+        alert('新增成功');
+      }
+      else if(response.data.state == 400){
+        alert('新增失敗');
+      }
+      else if(response.data.state == 401){
+        alert("請先登入");
+      }
+    })
+  }
 
   const handleChange = event => {
     setValues(oldValues => ({
@@ -168,6 +132,42 @@ export default function LearnVocabulary() {
     }));
   }
 
+  let lists = state.vocabularies.map((vocabularies, i) =>
+  <ExpansionPanel key={vocabularies.id}>
+    <ExpansionPanelSummary
+      expandIcon={<ExpandMoreIcon />}
+      aria-controls="panel1a-content"
+      id="panel1a-header"
+    >
+      <Typography className={classes.heading}>
+        <span>
+          {vocabularies.jpVocabulary}
+        </span>
+        <span>
+          [{vocabularies.katakana}] :
+    </span>
+        <span>
+          {vocabularies.cnVocabulary} /
+    </span>
+        <span>
+          {vocabularies.pos}
+        </span>
+      </Typography>
+    </ExpansionPanelSummary>
+    <Divider />
+    <ExpansionPanelDetails>
+      <Typography>
+        [例句]:{vocabularies.jpSentence}
+        <br />
+        [中譯]:{vocabularies.cnSentence}
+        <br />
+        <Button variant="contained" color="primary" className={classes.button} onClick = {handleAdd(vocabularies.id)}  >
+           新增單字
+        </Button>
+      </Typography>
+    </ExpansionPanelDetails>
+  </ExpansionPanel>)
+
   return (
     <div>
       <form className={classes.root} autoComplete="off">
@@ -188,21 +188,6 @@ export default function LearnVocabulary() {
             <MenuItem value={5}>N5</MenuItem>
           </Select>
         </FormControl>
-
-        {/* <FormControl className={classes.formControl}>
-        <InputLabel >詞性</InputLabel>
-        <Select
-        value={values.ops}
-          onChange={handleChange}
-          inputProps={{
-            name: 'ops',
-          }}
-        >
-          <MenuItem value={1}>動詞</MenuItem>
-          <MenuItem value={2}>名詞</MenuItem>
-          <MenuItem value={3}>副詞</MenuItem>
-        </Select>
-      </FormControl> */}
         <FormControl className={classes.margin} >
           <InputLabel>查詢單字</InputLabel>
           <Input
@@ -218,7 +203,7 @@ export default function LearnVocabulary() {
         </FormControl>
       </form>
       <Divider style={{ 'marginTop': '20px' }} />
-      <MyExpand data={{ state }} />
+      {lists}
     </div>
   );
 }

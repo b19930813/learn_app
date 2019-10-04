@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useCallback}from 'react'
 import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
@@ -44,71 +44,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
-
-
-const MyExpand = props => {
-
-  const [state,setState ] = React.useState();
-  const handleDelete = (vID) => event => {
-    // const post = {
-    //   vocabularyID: vID
-    // }
-    // axios
-    //   .delete('/api/my_vocabularies/' + vID)
-    //   .then(response => {
-    //     //response 判斷
-    //     setState();
-    //   })
-  }
-
-  const classes = useStyles();
-  let lists = props.data.state.vocabularies.map((vocabularies, i) =>
-    <ExpansionPanel key={vocabularies.id}>
-      <ExpansionPanelSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
-      >
-        <Typography className={classes.heading}>
-          <span>
-            {vocabularies.jpVocabulary}
-          </span>
-          <span>
-            [{vocabularies.katakana}] :
-        </span>
-          <span>
-            {vocabularies.cnVocabulary} /
-        </span>
-          <span>
-            {vocabularies.pos}
-          </span>
-        </Typography>
-      </ExpansionPanelSummary>
-      <Divider />
-      <ExpansionPanelDetails>
-        <Typography>
-          [例句]:{vocabularies.jpSentence}
-          <br />
-          [中譯]:{vocabularies.cnSentence}
-          <br />
-          <Button variant="contained" color="secondary" className={classes.button} onClick={handleDelete(vocabularies.id)}>
-            刪除單字
-            </Button>
-        </Typography>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>)
-  return (
-    <div>
-      {lists}
-    </div>
-  )
-};
-
 export default function LearnVocabulary() {
-  const testfunction = () =>{
-    console.log("test function successs");
-  }
+  const [, updateState] = React.useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
   const classes = useStyles();
   const [values, setValues] = React.useState({
     level: '',
@@ -132,7 +70,12 @@ export default function LearnVocabulary() {
         }
       })
       .then(response => {
+        if(response.data.state!=401){
         setState({ vocabularies: response.data.vocabularies });
+        }
+        else{
+           alert('請先登入才能看到我的單字喔!');
+        }
       })
 
   }, []);
@@ -176,6 +119,66 @@ export default function LearnVocabulary() {
     }));
   }
 
+  const handleDelete = (vID) => event => {
+     axios
+      .delete('/api/my_vocabularies/' + vID)
+      .then(response => {
+        if(response.data.state ==200){
+        axios
+        .get('/api/my_vocabularies', {
+          params: {
+            ID: values.level,
+            searchV: values.searchV
+          }
+        })
+        .then(response => {
+          setState({ vocabularies: response.data.vocabularies });
+        })
+      }
+      else{
+        alert('發生不明錯誤，無法刪除單字');
+      }
+      })
+ 
+  }
+
+  //create list to show vocabulary
+  let lists = state.vocabularies.map((vocabularies, i) =>
+    <ExpansionPanel key={vocabularies.id}>
+      <ExpansionPanelSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a-content"
+        id="panel1a-header"
+      >
+        <Typography className={classes.heading}>
+          <span>
+            {vocabularies.jpVocabulary}
+          </span>
+          <span>
+            [{vocabularies.katakana}] :
+      </span>
+          <span>
+            {vocabularies.cnVocabulary} /
+      </span>
+          <span>
+            {vocabularies.pos}
+          </span>
+        </Typography>
+      </ExpansionPanelSummary>
+      <Divider />
+      <ExpansionPanelDetails>
+        <Typography>
+          [例句]:{vocabularies.jpSentence}
+          <br />
+          [中譯]:{vocabularies.cnSentence}
+          <br />
+          <Button variant="contained" color="secondary" className={classes.button} onClick={handleDelete(vocabularies.id)}>
+            刪除單字
+          </Button>
+        </Typography>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>)
+
   return (
     <div>
       <form className={classes.root} autoComplete="off">
@@ -212,7 +215,7 @@ export default function LearnVocabulary() {
         </FormControl>
       </form>
       <Divider style={{ 'marginTop': '20px' }} />
-      <MyExpand data={{ state, values }} />
+      {lists}
     </div>
   );
 }
