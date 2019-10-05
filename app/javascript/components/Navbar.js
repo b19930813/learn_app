@@ -130,6 +130,12 @@ export default function Navbar() {
     email:'',
     password:''
   });
+  const [rvalues, setRvalues] = React.useState({
+    email:'',
+    password:'',
+    confirm_password:''
+  });
+
   const [open, setOpen] = React.useState(false);
   const [openRes, setOpenRes] = React.useState(false);
   const [email,setEmail] = React.useState(false);
@@ -211,14 +217,13 @@ export default function Navbar() {
     })
   }
   const handleLogin = event =>{
-    event.preventDefault();
-    //api to login
+  event.preventDefault();
+  const post  = {
+    email: values.email,
+    password: values.password
+  }
     axios
-    .post('/api/login',{
-        email : values.email,
-        password: values.password
-      
-    })
+    .post('/api/sessions',post)
     .then(response => {
       console.log(response);
     })
@@ -238,26 +243,14 @@ export default function Navbar() {
   }
   const handleRegisterOpen = () =>{
     //document.location.href = "/learn_users/sign_up";
-    
-    
     //先切換頁面
-    //setOpenRes(true);
+    setOpenRes(true);
   }
   const handleResClose = () =>{
     setOpenRes(false);
   }
   const handleLoginOpen = () =>{
-   // document.location.href = "/learn_users/sign_in";
-   const post = {
-    email: 'test@yahoo.com',
-    password: 'testtest'
-  }
-  axios
-  .post('/api/sessions',post)
-  .then(response => {
-  })
-    //先切換頁面
-   // setOpen(true);
+    setOpen(true);
   }
   const handleClose = () =>{
     setOpen(false);
@@ -265,32 +258,41 @@ export default function Navbar() {
   const handleIndex = () =>{
     document.location.href = "/";
   }
+  const handleRegisterEmail = event =>{
+    event.persist();
+    setRvalues(oldValues =>({
+      ...oldValues,
+      email: event.target.value}));
+  }
+  const handleRegisterPassword = event =>{
+    event.persist();
+    setRvalues(oldValues =>({
+      ...oldValues,
+      password: event.target.value}));
+  }
+  const handleRegisterConfirmPassword = event =>{
+    event.persist();
+    setRvalues(oldValues =>({
+      ...oldValues,
+      confirm_password: event.target.value}));
+  }
   const handleRegisterSubmit = (event) =>{
     event.preventDefault();
+    console.log(rvalues);
+    if(rvalues.password!= rvalues.confirm_password){
+      alert('密碼跟確認密碼不相同');
+      return;
+    }
+    const post = {
+      email: rvalues
+    }
     axios
-    .delete('/api/logout')
-    .then(response => {
-    })
-
-    // event.preventDefault();
-    // const post = {
-    //     email: email,
-    //     password: password,
-    //     passwordconfirm: passwordConfirm
-    // }
-    // //console.log(post);
-    // axios
-    //   .post('/api/users',post)
-    //   .then(response =>{
-    //       //console.log(response);
-    //       //console.log(response.data);
-    //       if(response.data == "ok"){
-    //         alert('註冊成功，畫面即將跳轉...');
-    //       }
-    //       else{
-    //         alert('發生不明錯誤...');
-    //       }
-    //   })
+      .post('/api/users',post)
+      .then(response =>{
+          console.log(response);
+          //console.log(response.data);
+          
+      })
   }
 
 
@@ -409,11 +411,11 @@ export default function Navbar() {
           <Typography component="h1" variant="h5">
             註冊
           </Typography>
-          <form onSubmit={handleRegisterSubmit}  className={classes.form} noValidate>
+          <form className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  onChange = {handleChange}
+                  onChange = {handleRegisterEmail}
                   variant="outlined"
                   required
                   fullWidth
@@ -427,7 +429,7 @@ export default function Navbar() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  onChange = {handleChange}
+                  onChange = {handleRegisterPassword}
                   variant="outlined"
                   required
                   fullWidth
@@ -441,7 +443,7 @@ export default function Navbar() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  onChange = {handleChange}
+                  onChange = {handleRegisterConfirmPassword}
                   variant="outlined"
                   required
                   fullWidth
