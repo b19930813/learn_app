@@ -1,8 +1,7 @@
 module Api
     class PostsController < ApplicationController
       def index
-        posts = Post.order(created_at: :desc)
-        render json: { status: 'SUCCESS', message: 'loaded posts', data: posts }
+        puts learn_user_signed_in?
       end
 
       def show

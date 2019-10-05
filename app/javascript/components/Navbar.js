@@ -122,7 +122,14 @@ const transPage = (page) =>{
 
 
 export default function Navbar() {
+
+  
+
   const classes = useStyles();
+  const [values, setValues] = React.useState({
+    email:'',
+    password:''
+  });
   const [open, setOpen] = React.useState(false);
   const [openRes, setOpenRes] = React.useState(false);
   const [email,setEmail] = React.useState(false);
@@ -131,6 +138,42 @@ export default function Navbar() {
   const [state, setState] = React.useState({
     left: false,
   });
+  const [loginstate,setLoginstate] = React.useState({
+    login: false,
+  });
+  let navbarState = () =>{
+    if(loginstate.login == true){
+    return(
+     <div>
+    <Button color="inherit" onClick = {handlelogout}>登出</Button>
+     </div>
+    );
+  }
+   else{
+    return(
+      <div>
+     <Button color="inherit" onClick = {handleLoginOpen}>登入</Button>
+     <Button color="inherit" onClick = {handleRegisterOpen}>註冊</Button>
+      </div>
+     );
+   }
+  }
+  React.useEffect(() => {
+    values.level = 0;
+    axios
+      .get('/api/sessions')
+      .then(response => {
+        if(response.data.login == true){
+          //修改狀態條
+          setLoginstate({login:true})
+        }
+        else{
+          setLoginstate({login:false})
+        }
+      })
+
+  }, []);
+
   const toggleDrawer = (side, open) => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -159,45 +202,95 @@ export default function Navbar() {
   );
 
   const formRef = React.createRef();
-
+  
+  const handlelogout = event =>{
+    axios
+    .delete('/api/sessions/')
+    .then(response => {
+      console.log(response);
+    })
+  }
+  const handleLogin = event =>{
+    event.preventDefault();
+    //api to login
+    axios
+    .post('/api/login',{
+        email : values.email,
+        password: values.password
+      
+    })
+    .then(response => {
+      console.log(response);
+    })
+  }
+  const handleLoginEmail = event =>{
+    event.persist();
+    setValues(oldValues =>({
+      ...oldValues,
+      email: event.target.value}));
+      
+  }
+  const handleLoginPassword = event => {
+    event.persist();
+    setValues(oldValues =>({
+      ...oldValues,
+      password: event.target.value}));
+  }
   const handleRegisterOpen = () =>{
-    setOpenRes(true);
+    //document.location.href = "/learn_users/sign_up";
+    
+    
+    //先切換頁面
+    //setOpenRes(true);
   }
   const handleResClose = () =>{
     setOpenRes(false);
   }
   const handleLoginOpen = () =>{
-    setOpen(true);
+   // document.location.href = "/learn_users/sign_in";
+   const post = {
+    email: 'test@yahoo.com',
+    password: 'testtest'
+  }
+  axios
+  .post('/api/sessions',post)
+  .then(response => {
+  })
+    //先切換頁面
+   // setOpen(true);
   }
   const handleClose = () =>{
     setOpen(false);
-  }
-  const handleMenuButton = () =>{
-
   }
   const handleIndex = () =>{
     document.location.href = "/";
   }
   const handleRegisterSubmit = (event) =>{
     event.preventDefault();
-    const post = {
-        email: email,
-        password: password,
-        passwordconfirm: passwordConfirm
-    }
-    //console.log(post);
     axios
-      .post('/api/users',post)
-      .then(response =>{
-          //console.log(response);
-          //console.log(response.data);
-          if(response.data == "ok"){
-            alert('註冊成功，畫面即將跳轉...');
-          }
-          else{
-            alert('發生不明錯誤...');
-          }
-      })
+    .delete('/api/logout')
+    .then(response => {
+    })
+
+    // event.preventDefault();
+    // const post = {
+    //     email: email,
+    //     password: password,
+    //     passwordconfirm: passwordConfirm
+    // }
+    // //console.log(post);
+    // axios
+    //   .post('/api/users',post)
+    //   .then(response =>{
+    //       //console.log(response);
+    //       //console.log(response.data);
+    //       if(response.data == "ok"){
+    //         alert('註冊成功，畫面即將跳轉...');
+    //       }
+    //       else{
+    //         alert('發生不明錯誤...');
+    //       }
+    //   })
   }
 
 
@@ -227,10 +320,8 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}  onClick = {handleIndex}>
             田卷日語
           </Typography>
-          
-          <Button color="inherit" onClick = {handleLoginOpen}>登入</Button>
-         
-          <Button color="inherit" onClick = {handleRegisterOpen}>註冊</Button>
+          {/* <Button color="inherit" onClick = {handlelogout}>登出</Button> */}
+          {navbarState()}
         </Toolbar>
       </AppBar>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -255,6 +346,7 @@ export default function Navbar() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange = {handleLoginEmail}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -267,6 +359,7 @@ export default function Navbar() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  onChange = {handleLoginPassword}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -282,6 +375,7 @@ export default function Navbar() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick = {handleLogin}
             >
              登入
             </Button>
@@ -366,6 +460,7 @@ export default function Navbar() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick = {handleRegisterSubmit}
             >
              註冊
             </Button>
@@ -394,6 +489,7 @@ export default function Navbar() {
           side="left"
         />
           </Drawer>
+
     </div>
   );
 }

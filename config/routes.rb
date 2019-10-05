@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resources :posts
     resources :vocabularies, only: [:index, :destroy]
     resources :my_vocabularies
-    devise_for :learn_users
+    resource :sessions
   end
   # test ruotes 
   get 'pages/index'
