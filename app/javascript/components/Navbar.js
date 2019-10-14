@@ -147,6 +147,7 @@ export default function Navbar() {
   const [loginstate,setLoginstate] = React.useState({
     login: false,
   });
+
   let navbarState = () =>{
     if(loginstate.login == true){
     return(
@@ -164,6 +165,7 @@ export default function Navbar() {
      );
    }
   }
+
   React.useEffect(() => {
     values.level = 0;
     axios
@@ -210,10 +212,11 @@ export default function Navbar() {
   const formRef = React.createRef();
   
   const handlelogout = event =>{
+    alert('登出中...請稍等');
     axios
     .delete('/api/sessions/')
     .then(response => {
-      console.log(response);
+        location.reload();
     })
   }
   const handleLogin = event =>{
@@ -225,7 +228,13 @@ export default function Navbar() {
     axios
     .post('/api/sessions',post)
     .then(response => {
-      console.log(response);
+      if(!response.data.error){
+        alert('登入成功!');
+        location.reload();
+      }
+      else{
+        alert('輸入的帳號密碼不正確!');
+      }
     })
   }
   const handleLoginEmail = event =>{
@@ -278,16 +287,16 @@ export default function Navbar() {
   }
   const handleRegisterSubmit = (event) =>{
     event.preventDefault();
-    console.log(rvalues);
     if(rvalues.password!= rvalues.confirm_password){
       alert('密碼跟確認密碼不相同');
       return;
     }
     const post = {
-      email: rvalues
+      email: rvalues.email,
+      password: rvalues.password
     }
     axios
-      .post('/api/users',post)
+      .post('/api/learn_users',post)
       .then(response =>{
           console.log(response);
           //console.log(response.data);

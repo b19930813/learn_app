@@ -3,17 +3,18 @@ module API
         def create
             puts 'run this'
             @learn_user = LearnUser.new user_params
-
-            if @learn_user.save!
-              render json: @learn_user
-            else
-              render json: { state: 404)
-            end
+            puts @learn_user
+            render json: {learn_user: @learn_user}
+            # if @learn_user.save!
+            #   render json: {learn_user: @learn_user}
+            # else
+            #     render plain: 'false'  
+            # end
         end
 
         private 
         def user_params
-            params.require(:user).permit(:email, :password)
+            params.require(:learn_user).permit(:email, :password)
         end
     end
 end

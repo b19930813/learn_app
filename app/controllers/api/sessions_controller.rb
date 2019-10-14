@@ -8,8 +8,12 @@ module API
              return invalid_email unless @learnuser
              if @learnuser.valid_password?(params[:password])
                 sign_in :learn_user, @learnuser
-                puts "登入了? = #{learn_user_signed_in?}"
-                render json: @learnuser, serializer: SessionSerializer, root: nil
+                if learn_user_signed_in? 
+                  puts 'login!!!'
+                  render json: {login: learn_user_signed_in?}
+                end
+                #puts "登入了? = #{learn_user_signed_in?}"
+                #render json: @learnuser, serializer: SessionSerializer, root: nil
               
               else
                 invalid_password
@@ -18,7 +22,7 @@ module API
         end
         #logout
         def destroy
-            puts "有登入嗎 : #{learn_user_signed_in?}"
+            #puts "有登入嗎 : #{learn_user_signed_in?}"
             sign_out(current_learn_user)
             # puts "destroy : #{learn_user_signed_in?}"
         end
