@@ -1,20 +1,20 @@
 module API
     class Api::LearnUsersController < ApplicationController
         def create
-            puts 'run this'
-            @learn_user = LearnUser.new user_params
-            puts @learn_user
-            render json: {learn_user: @learn_user}
-            # if @learn_user.save!
-            #   render json: {learn_user: @learn_user}
-            # else
-            #     render plain: 'false'  
-            # end
+            @learn_user = LearnUser.new(user_params)
+            if @learn_user.save
+                render json: {learn_user: @learn_user}
+            else
+               render json: {state:  @learn_user.errors}
+            end
         end
-
+        def show
+            @learn_user = LearnUser.find(current_learn_user[:id])
+            puts @learn_user
+        end
         private 
         def user_params
-            params.require(:learn_user).permit(:email, :password)
+                return {email: params[:email], password: params[:password]}
         end
     end
 end

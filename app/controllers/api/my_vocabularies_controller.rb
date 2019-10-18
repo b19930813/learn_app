@@ -2,7 +2,6 @@ module API
     class Api::MyVocabulariesController < ApplicationController
         rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
         def index
-            puts "有登入嗎?#{learn_user_signed_in?}"
             if learn_user_signed_in?
                 #回傳該使用者的單字
                 if params['ID'] == '0'

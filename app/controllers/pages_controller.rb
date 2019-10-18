@@ -13,4 +13,8 @@ class PagesController < ApplicationController
   end
   def myPlan
   end
+  def discuss
+  end
+  def myAccount
+  end
 end

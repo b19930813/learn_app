@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
   
   namespace :api, defaults: { format: 'json' } do
-    resources :learn_users, only: [:index, :create, :destroy]
+    resources :learn_users, only: [:create, :destroy, :show]
     resources :posts
     resources :vocabularies, only: [:index, :destroy]
     resources :my_vocabularies
@@ -26,9 +26,7 @@ Rails.application.routes.draw do
   get 'learnVocabulary', to: "pages#learnVocabulary"
   get 'myVocabulary', to: "pages#myVocabulary"
   get 'myPlan', to: "pages#myPlan"
-  get 'pages/learnVocabulary'
-  get 'pages/myVocabulary'
-  get 'pages/myPlan'
-  
+  get 'discuss', to: "pages#discuss"
+  get 'myAccount', to: "pages#myAccount"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

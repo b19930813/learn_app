@@ -2,7 +2,7 @@ import React from 'react'
 
 class MyPlan extends React.Component {
     render() {
-        return <h1>我的學習計畫!</h1>
+        return <h1>構思中</h1>
     }
 }
 
