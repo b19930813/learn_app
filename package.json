@@ -11,6 +11,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-paginate": "^6.3.0",
     "react-router": "^5.1.0",
     "react_ujs": "^2.6.0"
   },

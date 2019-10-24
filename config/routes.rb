@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   end
   # test ruotes 
   get 'pages/index'
+  get 'pages/login', to: "pages#login"
   get 'pages/show', to: "pages#show"
   get "pages/createPost"
   get 'learnJP', to: "pages#learnJP"
