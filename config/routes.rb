@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
   
   namespace :api, defaults: { format: 'json' } do
-    resources :learn_users, only: [:create, :destroy, :show]
+    resources :learn_users, only: [:create, :destroy, :show, :index, :update]
     resources :posts
     resources :vocabularies, only: [:index, :destroy]
     resources :my_vocabularies

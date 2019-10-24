@@ -185,9 +185,6 @@ const transPage = (page) => {
 
 
 export default function Navbar() {
-
-
-
   const classes = useStyles();
   const [values, setValues] = React.useState({
     email: '',

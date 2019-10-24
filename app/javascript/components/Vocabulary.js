@@ -19,7 +19,6 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',

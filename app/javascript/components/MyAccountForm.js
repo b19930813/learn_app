@@ -46,12 +46,8 @@ export default function MyAccount() {
            email: response.data.learn_user.email
          }))
         }
-        else{
-          alert("請先登入");
-          document.location.href = "/";
-        }
       })
-    
+
   }, []);
   const handlePassword = event => {
     event.persist();
