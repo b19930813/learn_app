@@ -28,7 +28,7 @@
    <main> 
    <div>
     <div id="Navbar">
-     <%= react_component("Navbar") %>
+     <%= react_component("Navbar",{userData: @userData }) %>
      </div>
      <div id="Context">
     <%= yield %>

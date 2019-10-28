@@ -43,6 +43,7 @@ import { amber, green } from '@material-ui/core/colors';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import clsx from 'clsx';
 import CloseIcon from '@material-ui/icons/Close';
+import LoginForm from './LoginForm'
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -186,10 +187,6 @@ const transPage = (page) => {
 
 export default function Navbar(props) {
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    email: '',
-    password: ''
-  });
   const [rvalues, setRvalues] = React.useState({
     email: '',
     password: '',
@@ -203,11 +200,11 @@ export default function Navbar(props) {
   });
 
   const { vertical, horizontal, snackbarOpen } = snackbar;
-  const [open, setOpen] = React.useState(false);
   const [openRes, setOpenRes] = React.useState(false);
   const [email, setEmail] = React.useState(false);
   const [password, setPassword] = React.useState(false);
   const [passwordConfirm, setPasswordConfirm] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const [state, setState] = React.useState({
     left: false,
   });
@@ -419,7 +416,9 @@ export default function Navbar(props) {
     setOpenRes(false);
   }
   const handleLoginOpen = () => {
+    console.log(open);
     setOpen(true);
+    console.log(open);
   }
   const handleClose = () => {
     setOpen(false);
@@ -525,82 +524,8 @@ export default function Navbar(props) {
           {/* <Button color="inherit" onClick = {handlelogout}>登出</Button> */}
           {navbarState()}
         </Toolbar>
-      </AppBar>
-      
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">田卷日語</DialogTitle>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              登入
-          </Typography>
-            <form className={classes.form} noValidate>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    onChange={handleLoginEmail}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="password"
-                    name="password"
-                    label="密碼"
-                    type="password"
-                    autoComplete="current-password"
-                    onChange={handleLoginPassword}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="記住我"
-                  />
-                </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={handleLogin}
-              >
-                登入
-            </Button>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    忘記密碼了?
-                </Link>
-                </Grid>
-              </Grid>
-            </form>
-          </div>
-          <Box mt={5}>
-          </Box>
-        </Container>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            取消
-          </Button>
-        </DialogActions>
-      </Dialog>
-
+      </AppBar>  
+      {LoginForm(open)}
       <Dialog open={openRes} onClose={handleResClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">田卷日語</DialogTitle>
         <Container component="main" maxWidth="xs">

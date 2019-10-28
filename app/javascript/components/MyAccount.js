@@ -23,36 +23,17 @@ const useStyles = makeStyles(theme => ({
     width: "500px",
   }
 }));
-export default function MyAccount() {
+export default function MyAccount(props) {
+
+  React.useEffect(() => {
+    console.log(props.userData);
+  }, []);
   const classes = useStyles();
   const [password, setPassword] = React.useState({
     password: '',
     confirmPassword: '',
   })
-  const [user, setUser] = React.useState({
-    ID: '',
-    email: '',
-  })
-  React.useEffect(() => {
-    //_learn_app_session
-    axios
-      .get('/api/learn_users')
-      .then(response => {
-        if (response.data.learn_user.email) {
-         // setUser(response.data.learn_user.email);
-         setUser(oldValues=>({
-           ...oldValues,
-           ID: response.data.learn_user.id,
-           email: response.data.learn_user.email
-         }))
-        }
-        else{
-          alert("請先登入");
-          document.location.href = "/";
-        }
-      })
-    
-  }, []);
+
   const handlePassword = event => {
     event.persist();
     setPassword(oldValues => ({
@@ -70,14 +51,13 @@ export default function MyAccount() {
   }
   const handleUpdate = event => {
     event.preventDefault();
-    if (password.password != password.confirmPassword) {
-      alert("所輸入的密碼跟確認密碼不一致");
+    if (!passwordConfirm(password.password,password.confirmPassword)) {
+      alert("請檢察密碼是否正確，有沒有符合規定，長度必須大於6以上");
     }
     else {
-
       //update data
       axios
-        .put('/api/learn_users/'+user.id,{
+        .put('/api/learn_users/'+props.userData.id,{
             password: password.password,
             confirmPassword: password.confirmPassword
           })
@@ -91,6 +71,11 @@ export default function MyAccount() {
           }
         })
     }
+  }
+  function passwordConfirm(password,password_confirm){
+     if(password.length <6) return false;
+     if(password!=password_confirm) return false;
+     return true;
   }
   return (
     <div>
@@ -107,7 +92,7 @@ export default function MyAccount() {
               name="email"
               autoComplete="email"
               disabled
-              value={user.email}
+              value= {props.userData.email}
             />
           </Grid>
           <Grid item xs={12}>

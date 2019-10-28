@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+    before_action :Login
 #     include AbstractController::Translation
 
 
@@ -37,4 +38,14 @@ class ApplicationController < ActionController::Base
 #   def authenticate_error
 #     render json: { error: t('devise.failure.unauthenticated') }, status: 401
 #   end
+private
+def Login 
+  if learn_user_signed_in? 
+    user = LearnUser.find(current_learn_user[:id])
+    @userData = {email: user[:email], id: user[:id]}
+  end
+end
+
+
+
 end

@@ -31,7 +31,6 @@ module API
 
         def show
             @learn_user = LearnUser.find(current_learn_user[:id])
-            puts @learn_user
         end
 
         private 
