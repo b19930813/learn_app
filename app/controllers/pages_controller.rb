@@ -1,6 +1,5 @@
 class PagesController < ApplicationController
   before_action :isLogin
-  @mynumber = "test number"
   def index
   end
 
@@ -14,10 +13,14 @@ class PagesController < ApplicationController
   end
 
   def learnVocabulary
+    @vocabularies = Vocabulary.all.page(params[:page]).per(5)
+    @vocabulariesCount = Vocabulary.count
   end
 
   def myVocabulary
-    if login == false
+    if isLogin 
+      
+    else
       render 'pages/login'
     end
   end
@@ -29,7 +32,7 @@ class PagesController < ApplicationController
   end
 
   def myAccount
-    if @login
+    if isLogin
       user = LearnUser.find(current_learn_user[:id])
       @userData = {email: user[:email], id: user[:id]}
     else
@@ -37,13 +40,9 @@ class PagesController < ApplicationController
     end
   end
   
-  def login
-
-  end
-
   private
   def isLogin
-    @login = learn_user_signed_in?
+    learn_user_signed_in?
   end
 
 end

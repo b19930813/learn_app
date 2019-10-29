@@ -3,7 +3,6 @@ module API
         def index
             if learn_user_signed_in?
             @learn_user = LearnUser.find(current_learn_user[:id])
-            puts @learn_user[:email]
             render json: {learn_user: @learn_user}
             else
                 render json: {state: 'error'}
@@ -38,8 +37,6 @@ module API
             return {email: params[:email], password: params[:password]}
         end
         def update_user_params
-            #puts "password = #{params[:params]}"
-          
             return {password: params[:password]}
         end
     end

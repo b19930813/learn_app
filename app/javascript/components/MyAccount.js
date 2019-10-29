@@ -24,10 +24,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 export default function MyAccount(props) {
-
-  React.useEffect(() => {
-    console.log(props.userData);
-  }, []);
   const classes = useStyles();
   const [password, setPassword] = React.useState({
     password: '',

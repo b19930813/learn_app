@@ -18,7 +18,12 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import Pagination from "material-ui-flat-pagination";
 
+
+const theme = createMuiTheme();
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,34 +50,26 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function LearnVocabulary() {
+export default function LearnVocabulary(props) {
   const classes = useStyles();
   const [values, setValues] = React.useState({
-    level: '',
+    level: 0,
     values: '',
     typingTimeout:0,
     searchV: '',
   });
   const [state, setState] = React.useState({
-    vocabularies: []
+    vocabularies: [],
   });
+  const [count,setCount] = React.useState(false);
   const [search, setSearch] = React.useState(0);
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
+  const [offset , setOffset] = React.useState(0);
   React.useEffect(() => {
-    values.level = 0;
-    axios
-      .get('/api/vocabularies', {
-        params: {
-          ID: 0,
-          searchV :''
-        }
-        })
-      .then(response => {
-        setState({ vocabularies: response.data.vocabularies });
-      })
-      
-  }, []);
+        setState({ vocabularies: props.vocabularies });
+        setCount(props.vocabulariesCount)
+  },[]);
 
   
   const handleAdd = (vID) => event =>{
@@ -109,8 +106,10 @@ export default function LearnVocabulary() {
       })
       .then(response => {
         setState({ vocabularies: response.data.vocabularies });
+        setCount(response.data.vocabulariesCount);
       })
   };
+
   const handleSearch = event => {
     let sendV = event.target.value;
     event.persist();
@@ -131,6 +130,22 @@ export default function LearnVocabulary() {
         })
      },1000)
     }));
+  }
+
+  const handlePageClick = event => {
+     axios
+      .get('/api/vocabularies', {
+        params: {
+          ID: values.level,
+          searchV: values.searchV,
+          page: (event/5)+1
+        }
+      })
+      .then(response => {
+        setState({ vocabularies: response.data.vocabularies });
+        setCount(response.data.vocabulariesCount);
+      })
+    setOffset(event);
   }
 
   let lists = state.vocabularies.map((vocabularies, i) =>
@@ -205,6 +220,15 @@ export default function LearnVocabulary() {
       </form>
       <Divider style={{ 'marginTop': '20px' }} />
       {lists}
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <Pagination
+          limit={5}
+          offset={offset}
+          total={count}
+          onClick={(e, offset) => handlePageClick(offset)}
+        />
+      </MuiThemeProvider>
     </div>
   );
 }

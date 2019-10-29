@@ -68,7 +68,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function LoginForm(props) {
+export default function LoginForm(props,handleEvent) {
   const classes = useStyles();
   const [values, setValues] = React.useState({
     email: '',
@@ -116,8 +116,8 @@ export default function LoginForm(props) {
   }
 
   const handleLoginClose = () => {
-    setOpen(false);
-    console.log("close:" + props);
+    
+
   }
   
   return (
@@ -197,5 +197,4 @@ export default function LoginForm(props) {
       </Dialog>
     </div>
   );
-  false;
 }
