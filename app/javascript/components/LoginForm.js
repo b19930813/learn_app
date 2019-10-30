@@ -1,85 +1,59 @@
 import React from 'react';
-import { Router, Route, hashHistory } from 'react-router'
-import { makeStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios'
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(3),
+
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    width: "500px",
   },
-  root: {
-    flexGrow: 1,
+  email: {
+    disabled: true,
+    width: "500px",
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  password: {
+    width: "500px",
   },
-  title: {
-    flexGrow: 1,
-  },
-  button: {
-    border: 0,
-    color: 'white',
-    height: 60,
-    padding: '0 30px',
-  },
-  icon: {
-    fontSize: 20,
-  },
-  iconVariant: {
-    opacity: 0.9,
-    marginRight: theme.spacing(1),
-  },
+  h1: {
+    marginTop: theme.spacing(3),
+    width: '100%',
+  }
 }));
 
-
-export default function LoginForm(props,handleEvent) {
+export default function LoginForm() {
   const classes = useStyles();
   const [values, setValues] = React.useState({
     email: '',
     password: ''
   });
- 
-  const [open, setOpen] = React.useState(false);
-  
+
   React.useEffect(() => {
-    setOpen(props);
-  },[props]);
+    alert("請先登入帳號才能使用功能喔");
+},[]);
+
+  const handlePassword = event => {
+    event.persist();
+    setPassword(oldValues => ({
+      ...oldValues,
+      password: event.target.value
+    }));
+  }
+  
+  const handleEmail = event =>{
+    event.persist();
+    setEmail(oldValues =>({
+      ...oldValues,
+      email: event.target.value
+    }));
+  }
 
   const handleLogin = event => {
     event.preventDefault();
@@ -99,102 +73,50 @@ export default function LoginForm(props,handleEvent) {
       })
   }
 
-  const handleLoginEmail = event => {
-    event.persist();
-    setValues(oldValues => ({
-      ...oldValues,
-      email: event.target.value
-    }));
-  }
-
-  const handleLoginPassword = event => {
-    event.persist();
-    setValues(oldValues => ({
-      ...oldValues,
-      password: event.target.value
-    }));
-  }
-
-  const handleLoginClose = () => {
-    
-
-  }
-  
   return (
-    <div className={classes.root}>
-      <Dialog open={open} onClose={handleLoginClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">田卷日語</DialogTitle>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              登入
-          </Typography>
-            <form className={classes.form} noValidate>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    onChange={handleLoginEmail}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="password"
-                    name="password"
-                    label="密碼"
-                    type="password"
-                    autoComplete="current-password"
-                    onChange={handleLoginPassword}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="記住我"
-                  />
-                </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={handleLogin}
-              >
-                登入
+    <div>   
+      <form className={classes.form} noValidate style={{ "textAlign": "center" }}>
+      <h1>登入</h1>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField className={classes.email}
+              variant="outlined"
+              required
+              fullWidth
+              id="email"
+              label="Email"
+              name="email"
+              autoComplete="email"
+              onChange={handleEmail}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField className={classes.password}
+              variant="outlined"
+              required
+              fullWidth
+              id="password"
+              name="password"
+              label="密碼"
+              type="password"
+              autoComplete="current-password"
+              onChange={handlePassword}
+            />
+          </Grid>
+        </Grid>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          onClick={handleLogin}
+        >
+          登入
             </Button>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    忘記密碼了?
-                </Link>
-                </Grid>
-              </Grid>
-            </form>
-          </div>
-          <Box mt={5}>
-          </Box>
-        </Container>
-        <DialogActions>
-          <Button onClick={handleLoginClose} color="primary">
-            取消
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <Grid container justify="flex-end">
+        </Grid>
+      </form>
     </div>
   );
 }

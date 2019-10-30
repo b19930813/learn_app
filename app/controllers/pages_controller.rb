@@ -40,6 +40,21 @@ class PagesController < ApplicationController
     end
   end
   
+  def login
+    if isLogin != false
+      render 'pages/error'
+    end
+  end
+
+  def register
+    if isLogin
+      render 'pages/index'
+    end
+  end
+  
+  def error
+  end
+
   private
   def isLogin
     learn_user_signed_in?

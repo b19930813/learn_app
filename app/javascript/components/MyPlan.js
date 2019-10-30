@@ -1,9 +1,21 @@
 import React from 'react'
+import LoginForm from './LoginForm'
+// class MyPlan extends React.Component {
+//     render() {
+//         return (
+//             <div>
+//             <LoginForm props={false}/>
+//             </div>
+//         )
+//     }
+// }
 
-class MyPlan extends React.Component {
-    render() {
-        return <h1>構思中</h1>
-    }
+// export default MyPlan
+
+export default function MyPlan(){
+    return(
+        <div>
+            <LoginForm open = {true} />
+        </div>
+    )
 }
-
-export default MyPlan
