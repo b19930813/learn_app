@@ -44,9 +44,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function LearnVocabulary() {
-  const [, updateState] = React.useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
+export default function MyVocabulary(props) {
   const classes = useStyles();
   const [values, setValues] = React.useState({
     level: '',
@@ -62,22 +60,12 @@ export default function LearnVocabulary() {
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
     values.level = 0;
-    axios
-      .get('/api/my_vocabularies', {
-        params: {
-          ID: 0,
-          searchV: ''
-        }
-      })
-      .then(response => {
-        if(response.data.state!=401){
-        setState({ vocabularies: response.data.vocabularies });
-        }
-        else{
-           alert('請先登入才能看到我的單字喔!');
-        }
-      })
-
+    if(props.myVocabularies != null){
+      setState({ vocabularies: props.myVocabularies})
+    }
+    else{
+      alert("請先登入才能看到我的單字喔");
+    }
   }, []);
 
 

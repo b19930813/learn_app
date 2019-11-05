@@ -4,6 +4,20 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios'
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import Link from '@material-ui/core/Link';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/Error';
+import clsx from 'clsx';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
+
+const variantIcon = {
+  success: CheckCircleIcon,
+  error: ErrorIcon,
+};
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -13,57 +27,76 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    width: "500px",
   },
-  email: {
-    disabled: true,
-    width: "500px",
-  },
-  password: {
-    width: "500px",
-  }
 }));
+
+function MySnackbarContentWrapper(props) {
+  const classes = useStyles();
+  const { className, message, onClose, variant, ...other } = props;
+  const Icon = variantIcon[variant];
+
+  return (
+    <SnackbarContent
+      className={clsx(classes[variant], className)}
+      aria-describedby="client-snackbar"
+      message={
+        <span id="client-snackbar" className={classes.message}>
+          <Icon className={clsx(classes.icon, classes.iconVariant)} />
+          {message}
+        </span>
+      }
+      action={[
+        <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
+          <CloseIcon className={classes.icon} />
+        </IconButton>,
+      ]}
+      {...other}
+    />
+  );
+}
+
+
 export default function MyAccount(props) {
   const classes = useStyles();
-  
-  const [rvalues, setRvalues] = React.useState({
-    email: '',
-    password: '',
-    confirm_password: ''
+  const [email,setEmail] = React.useState('');
+  const [password,setPassword] = React.useState('');
+  const [confirmPassword,setConfirmPassword] = React.useState('');
+  const [snackbar, setSnackbar] = React.useState({
+    snackbarOpen: false,
+    vertical: 'top',
+    horizontal: 'center',
+    text: ''
   });
+  const { vertical, horizontal, snackbarOpen } = snackbar;
 
   const handlePassword = event => {
-    event.persist();
-    setRvalues(oldValues => ({
-      ...oldValues,
-      password: event.target.value
-    }));
+    setPassword(event.target.value);
   }
   
   const handleConfirmPassword = event =>{
-    event.persist();
-    setRvalues(oldValues => ({
-      ...oldValues,
-      confirm_password: event.target.value
-    }));
+    setConfirmPassword(event.target.value)
   }
   
   const handleEmail = event =>{
-    event.persist();
-    setRvalues(oldValues => ({
-      ...oldValues,
-      email: event.target.value
-    }));
+   setEmail(event.target.value);
+  }
+  
+  const handleSnackbarOpen = (newstate) => {
+    setSnackbar({ snackbarOpen: true, ...newstate });
   }
 
-  const handleRegister = event => {
+  const handleSnackbarClose = () => {
+    setSnackbar({ ...snackbar, snackbarOpen: false });
+  }
+
+  const handleSubmit = event => {
     event.preventDefault();
     //前端驗證
-    if (userdataVerfication(rvalues) == true) {
+    if (userdataVerfication() == true) {
       const post = {
-        email: email.email,
-        password: password.password,
-        confirm_password: password.confirm_password
+        email: email,
+        password: password,
+        confirm_password: confirmPassword
 
       }
       axios
@@ -79,16 +112,16 @@ export default function MyAccount(props) {
         })
     }
   }
-
-  const userdataVerfication = (userdata) => {
+  //先暫定這樣 之後修改
+  const userdataVerfication = () => {
     let emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-    if (userdata.password != userdata.confirm_password) {
+    if (password != confirmPassword) {
       handleSnackbarOpen({ vertical: 'bottom', horizontal: 'center', text: '密碼跟確認密碼不一致' });
     }
-    else if (userdata.password.length < 6) {
+    else if (password.length < 6) {
       handleSnackbarOpen({ vertical: 'bottom', horizontal: 'center', text: '密碼必須要大於6碼' });
     }
-    else if (userdata.email.search(emailRule) == -1) {
+    else if (email.search(emailRule) == -1) {
       handleSnackbarOpen({ vertical: 'bottom', horizontal: 'center', text: '請輸入正確格式的email' });
     }
     else {
@@ -98,60 +131,82 @@ export default function MyAccount(props) {
 
   return (
     <div>
-      <form className={classes.form} noValidate style={{ "textAlign": "center" }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField className={classes.email}
-              variant="outlined"
-              required
-              fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
-              onChange = {handleEmail}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField className={classes.password}
-              variant="outlined"
-              required
-              fullWidth
-              id="password"
-              name="password"
-              label="密碼"
-              type="password"
-              autoComplete="current-password"
-              onChange={handlePassword}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField className={classes.password}
-              variant="outlined"
-              required
-              fullWidth
-              id="confirmPassword"
-              name="confirmPassword"
-              label="確認密碼"
-              type="password"
-              autoComplete="current-password"
-              onChange={handleConfirmPassword}
-            />
-          </Grid>
-        </Grid>
-        <Button
-          type="submit"
+    <form className={classes.form} noValidate>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <TextField
+          onChange={handleEmail}
+          variant="outlined"
+          required
           fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={handleRegister}
-        >
-          註冊
-            </Button>
-        <Grid container justify="flex-end">
-        </Grid>
-      </form>
+          id="Registeremail"
+          label="Email"
+          name="email"
+          autoComplete="email"
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          onChange={handlePassword}
+          variant="outlined"
+          required
+          fullWidth
+          id="password"
+          name="password"
+          minLength='8'
+          label="密碼"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          onChange={handleConfirmPassword}
+          variant="outlined"
+          required
+          fullWidth
+          name="passwordConfirm"
+          minLength='8'
+          label="確認密碼"
+          type="password"
+          id="RegisterpasswordConfirm"
+          autoComplete="current-password"
+        />
+      </Grid>
+    </Grid>
+    <Button
+      type="submit"
+      fullWidth
+      variant="contained"
+      color="primary"
+      className={classes.submit}
+      onClick={handleSubmit}
+    >
+      註冊
+  </Button>
+    <Grid container justify="flex-end">
+      <Grid item>
+        <Link href="#" variant="body2">
+          已經有帳號了? 登入
+      </Link>
+      </Grid>
+    </Grid>
+    <Snackbar
+      anchorOrigin={{ vertical, horizontal }}
+      open={snackbarOpen}
+      onClose={handleSnackbarClose}
+      ContentProps={{
+        'aria-describedby': 'message-id',
+      }}
+    >
+      <MySnackbarContentWrapper
+        variant="error"
+        className={classes.margin}
+        message= {snackbar.text}
+      />
+    </Snackbar>
+  </form>
     </div>
   );
 }

@@ -73,7 +73,6 @@ export default function LearnVocabulary(props) {
 
   
   const handleAdd = (vID) => event =>{
-    
     const post = {
       vocabularyID: vID
     }

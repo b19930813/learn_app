@@ -18,10 +18,9 @@ class PagesController < ApplicationController
   end
 
   def myVocabulary
+    @userLogin = isLogin
     if isLogin 
-      
-    else
-      render 'pages/login'
+     @myVocabularies = Vocabulary.where(id: MyVocabulary.where("learn_user_id = #{current_learn_user['id']}").select('vocabulary_id'))
     end
   end
 
