@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Responses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th>Is answer</th>
+      <th>Article</th>
+      <th>Learn user</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @responses.each do |response| %>
+      <tr>
+        <td><%= response.content %></td>
+        <td><%= response.is_answer %></td>
+        <td><%= response.article %></td>
+        <td><%= response.learn_user %></td>
+        <td><%= link_to 'Show', response %></td>
+        <td><%= link_to 'Edit', edit_response_path(response) %></td>
+        <td><%= link_to 'Destroy', response, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Response', new_response_path %>

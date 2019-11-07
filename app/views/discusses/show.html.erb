@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @discuss.content %>
+</p>
+
+<p>
+  <strong>Level:</strong>
+  <%= @discuss.level %>
+</p>
+
+<p>
+  <strong>Response:</strong>
+  <%= @discuss.response %>
+</p>
+
+<p>
+  <strong>Learn user:</strong>
+  <%= @discuss.learn_user %>
+</p>
+
+<%= link_to 'Edit', edit_discuss_path(@discuss) %> |
+<%= link_to 'Back', discusses_path %>

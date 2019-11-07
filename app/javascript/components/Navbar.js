@@ -75,7 +75,6 @@ const useStyles = makeStyles(theme => ({
 
 
 const transPage = (page) => {
-  console.log(page);
   switch (page) {
     case '日語學習':
       document.location.href = "learnJP";
@@ -238,8 +237,9 @@ export default function Navbar(props) {
   };
 
   const handlelogout = event => {
+    // console.log(props.userData.id);
     axios
-      .delete('/api/sessions/')
+      .delete(`/api/sessions/${props.userData.id}`)
       .then(response => {
         location.reload();
       })

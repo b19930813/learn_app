@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_05_034803) do
+ActiveRecord::Schema.define(version: 2019_11_06_040149) do
+
+  create_table "articles", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.integer "browseCount"
+    t.integer "likeCount"
+    t.integer "learn_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["learn_user_id"], name: "index_articles_on_learn_user_id"
+  end
+
+  create_table "discusses", force: :cascade do |t|
+    t.text "content"
+    t.integer "level"
+    t.integer "response_id"
+    t.integer "learn_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["learn_user_id"], name: "index_discusses_on_learn_user_id"
+    t.index ["response_id"], name: "index_discusses_on_response_id"
+  end
 
   create_table "learn_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -62,6 +84,17 @@ ActiveRecord::Schema.define(version: 2019_10_05_034803) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "responses", force: :cascade do |t|
+    t.text "content"
+    t.boolean "is_answer"
+    t.integer "article_id"
+    t.integer "learn_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_responses_on_article_id"
+    t.index ["learn_user_id"], name: "index_responses_on_learn_user_id"
   end
 
   create_table "users", force: :cascade do |t|

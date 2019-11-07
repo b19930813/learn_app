@@ -22,9 +22,7 @@ module API
         end
         #logout
         def destroy
-            #puts "有登入嗎 : #{learn_user_signed_in?}"
             sign_out(current_learn_user)
-            # puts "destroy : #{learn_user_signed_in?}"
         end
         def index
             render json: {login: learn_user_signed_in?}
