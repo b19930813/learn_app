@@ -12,7 +12,8 @@ Rails.application.routes.draw do
     resources :vocabularies
     resources :discusses
     resources :responses
-    resources :articles
+    resources :adminarticles
+
   end
   
   namespace :api, defaults: { format: 'json' } do
@@ -21,10 +22,12 @@ Rails.application.routes.draw do
     resources :vocabularies, only: [:index, :destroy]
     resources :my_vocabularies
     resources :sessions
-    resources :discuss, only: [:create, :destroy, :show, :index, :update]
+    resources :discusses, only: [:create, :destroy, :show, :index, :update]
     resources :responses, only: [:create, :destroy, :show, :index, :update]
     resources :articles, only: [:create, :destroy, :show, :index, :update]
   end
+
+  resources :articles, only: [:show,:index]
   # test ruotes 
   get 'pages/index'
   get 'pages/login', to: "pages#login"
@@ -34,7 +37,6 @@ Rails.application.routes.draw do
   get 'learnVocabulary', to: "pages#learnVocabulary"
   get 'myVocabulary', to: "pages#myVocabulary"
   get 'myPlan', to: "pages#myPlan"
-  get 'discuss', to: "pages#discuss"
   get 'myAccount', to: "pages#myAccount"
   get 'createArticles', to: "pages#createArticle"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

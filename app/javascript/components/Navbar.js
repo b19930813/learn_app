@@ -77,19 +77,19 @@ const useStyles = makeStyles(theme => ({
 const transPage = (page) => {
   switch (page) {
     case '日語學習':
-      document.location.href = "learnJP";
+      document.location.href = "/learnJP";
       break;
     case '必背單字':
-      document.location.href = "learnVocabulary";
+      document.location.href = "/learnVocabulary";
       break;
     case '我的單字本':
-      document.location.href = "myVocabulary";
+      document.location.href = "/myVocabulary";
       break;
     case '我的學習計畫':
-      document.location.href = "myPlan";
+      document.location.href = "/myPlan";
       break;
     case '討論區':
-      document.location.href = "discuss";
+      document.location.href = "/articles";
       break;
   }
 }
