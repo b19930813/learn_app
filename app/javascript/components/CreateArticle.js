@@ -36,7 +36,7 @@ export default function CreateArticle(props) {
             .then(response => {
                 if (response.data.state == 200) {
                     alert('新增成功');
-                    document.location.href = "discuss";
+                    document.location.href = "articles";
                 }
                 else if (response.data.state == 400) {
                     alert('新增失敗');

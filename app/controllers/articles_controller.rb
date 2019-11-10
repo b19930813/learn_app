@@ -2,7 +2,8 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
-    @articleData =  Article.all.page(params[:page]).per(10)
+    @articleDatas =  Article.includes(:learn_user).page(params[:page]).per(10)
+    @userDatas =  @articleDatas.map(&:learn_user)
   end
 
   def show

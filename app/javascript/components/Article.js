@@ -10,9 +10,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const handlePaperClick = (id)=>{
-  console.log(`id = ${id}`);
-}
+
 const handleOpenAC = () =>{
   document.location.href = "createArticles";
 }
@@ -23,16 +21,19 @@ export default function Article(props) {
   const classes = useStyles();
 
   React.useEffect(() => {
-    console.log(props);
+    //console.log(props);
   }, []);
 
+  const handleClick =(id)=> event =>{
+    document.location.href =`articles/${id}`;
+  }
   let lists = props.article.map((arti, i) =>
-  <Paper key = {arti.id} className={classes.root} onClick = {handlePaperClick(arti.id)}>
+  <Paper key = {arti.id} className={classes.root} onClick = {handleClick(arti.id)}>
        <Typography  variant="h5" component="h3">
         {arti.title}
        </Typography>
        <Typography component="p">
-        文章建立於:{arti.created_at.substring(0,10)}
+       使用者{props.user[i].email} 於 {arti.created_at.substring(0,10)} 建立文章
        </Typography>
      </Paper>
  )

@@ -1,10 +1,13 @@
 module API
     class Api::DiscussesController < ApplicationController
         def index
-            discusses = Discuss.where("level = #{params[:level]} and response_id = #{params[:responseID]}")
+       
+            discusses = Discuss.includes(:learn_user).where("level = #{params[:level]} and response_id = #{params[:responseID]}")
+            userDatas = discusses.map(&:learn_user)
             #find user 
             
-            render json: {discusses: discusses}
+            #render json: {discusses: discusses , email: discusses.learn_user.email}
+            render json: {discusses:discusses , userDatas:userDatas}
         end
 
        def create
