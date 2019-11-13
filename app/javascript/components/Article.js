@@ -21,7 +21,7 @@ export default function Article(props) {
   const classes = useStyles();
 
   React.useEffect(() => {
-    //console.log(props);
+    console.log(props);
   }, []);
 
   const handleClick =(id)=> event =>{
@@ -33,9 +33,9 @@ export default function Article(props) {
         {arti.title}
        </Typography>
        <Typography component="p">
-       使用者{props.user[i].email} 於 {arti.created_at.substring(0,10)} 建立文章
+       {props.user[i].email} 於 {arti.created_at.substring(0,10)} 建立文章
        </Typography>
-     </Paper>
+  </Paper>
  )
 
   return (
@@ -50,7 +50,7 @@ export default function Article(props) {
        className={classes.button}
        style={{ "float":"right" }}
        onClick = {handleOpenAC} >
-        新增文章
+        我要發文
       </Button>
       </div>
   

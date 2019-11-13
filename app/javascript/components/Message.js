@@ -1,68 +1,145 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios'
 import Button from '@material-ui/core/Button';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import TextField from '@material-ui/core/TextField';
+import Container from '@material-ui/core/Container';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        padding: theme.spacing(3, 2),
+        paddingLeft: "5%",
+        paddingRight: "5%",
     },
+    expansionPanel: {
+       // background: 'linear-gradient(45deg, #00AAAA 30%,#00DDDD 90%)',
+       marginTop:'10px', 
+
+    },
+    text :{
+        background: '#FFFFFF'
+    },
+    button: {
+        marginLeft: '10px'
+    },
+    Container : {
+        marginTop: "5px",
+
+    }
 }));
 
 
-export default function Message(props) {
+export default function Message(props,level) {
     const classes = useStyles();
-    const [messages, setMessages] = React.useState({
-        datas: []
-    });
-    const [userdatas, setUserdatas] = React.useState({
-        datas: []
-    });
-  
-    const handleClick = () =>{
-        //
-        console.log(messages.datas);
-        messages.datas.map((data,i) =>
-        console.log(userdatas.datas[0].email)
-    )
-    }
+    const [datas, setDatas] = React.useState({
+        messages: [],
+        users: []
+    })
+    const [content, setContent] = React.useState('');
+
+   function getDiscuss(){
+    axios
+    .get('/api/discusses', {
+        params: {
+            level: props.level,
+            responseID: props.props.articleData.id
+        }
+    })
+    .then(response => {
+        setDatas(oldValues => ({
+            ...oldValues,
+            messages: response.data.discusses,
+            users: response.data.userDatas
+        }));
+    })
+   }
+
     React.useEffect(() => {
         //打api到後台去拿Message，根據文章ID後setMessage渲染
-        axios
-            .get('/api/discusses', {
-                params: {
-                    level: 1,
-                    responseID: props.props.articleData.id
-                }
-            })
-            .then(response => {
-                console.log(response);
-                setMessages({ datas: response.data.discusses });
-                setUserdatas({ datas: response.data.userDatas });
-
-            })
-
-        // console.log("Message!");
-        // console.log(props);
+     
+        getDiscuss();
     }, []);
 
- 
-let lists = messages.datas.map((data, i) =>
-<Paper key={data.id} className={classes.root} >
-    <Typography component="p">
-         : {data.content} 
-         {console.log(userdatas.datas[0])}
-    </Typography>
-</Paper>
+     
+    const handleContentChange = event => {
+        setContent(event.target.value);
+    }
 
-)
+    const handleMessageSubmit = () => {
+        //打API，後端確認是否登入
+        const post = {
+            content: content,
+            responseID: props.props.articleData.id,
+            level: 1
+        }
+        axios
+            .post('/api/discusses', post)
+            .then(response => {
+                if (response.data.state == 200) {
+                    alert('留言成功');
+                    getDiscuss();
+                }
+                else if (response.data.state == 400) {
+                    alert('新增失敗');
+                }
+                else if (response.data.state == 401) {
+                    alert("請先登入");
+                }
+                else {
+                    console.log(response);
+                }
+            })
+    }
+
+
+    let lists = datas.messages.map((message, i) =>
+        <div key={message.id} className={classes.Container}  >
+            <Typography component="p" fontSize={12}>
+           {(i+1)}. {message.content} - {datas.users[i].email} 
+            </Typography>
+            <Divider className = {classes.Divider} variant="middle"/>
+        </div>
+    )
 
     return (
         <div className={classes.root}>
-           
-      {lists}
+            {lists}
+            <ExpansionPanel className = {classes.expansionPanel}>
+                <ExpansionPanelSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                >
+                    <Typography className={classes.heading}>我要留言</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+
+                    <TextField
+                        className={classes.text}
+                        label="內容"
+                        variant="outlined"
+                        fullWidth={true}
+                        multiline={true}
+                        rows={1}
+                        rowsMax={1}
+                        onChange={handleContentChange}
+                    />
+                    <Button
+                    className = {classes.button}
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    style={{ "float": "right" }}
+                    onClick={handleMessageSubmit} >
+                    送出
+                </Button>
+                </ExpansionPanelDetails>
+            </ExpansionPanel>
         </div>
     );
 }

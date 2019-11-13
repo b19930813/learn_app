@@ -124,6 +124,7 @@ export default function Navbar(props) {
         onClose={handleMenuClose}
       >
         <MenuItem onClick={handleMyAccount}>我的帳號</MenuItem>
+        <MenuItem >發文</MenuItem>
         <MenuItem onClick={handlelogout}>登出</MenuItem>
       </Menu>
     )

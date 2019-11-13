@@ -3,11 +3,12 @@ class ArticlesController < ApplicationController
 
   def index
     @articleDatas =  Article.includes(:learn_user).page(params[:page]).per(10)
-    @userDatas =  @articleDatas.map(&:learn_user)
+    @userDatas = @articleDatas.map(&:learn_user)
   end
 
   def show
-    
+    @articleDatas = Article.includes(:learn_user).where("id = #{params[:id]}")
+    @userDatas = @articleDatas[0].learn_user.email
   end
 
   def edit

@@ -2,38 +2,48 @@ import React from 'react';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import CreateMessage from './WantToMessage'
 import Message from './Message'
+import Answer from './Answer'
 
 const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
+        
     },
     Divider:{
         margin: '20px',
         width: '100%',
+    },
+    Content: {
+        paddingLeft: "3%",
+        paddingRight: "3%",
     }
 }));
 
 export default function ShowArticle(props) {
     const classes = useStyles();
-    React.useEffect(() => {
-       // console.log(props);
-    }, []);
+    
+    // React.useEffect(() => {
+    //     console.log(props);
+    // }, []);
 
     return (
         <div className={classes.root}>
             <Typography variant="h4" gutterBottom>
                 {props.articleData.title}
             </Typography>
+            <Typography variant="subtitle1" gutterBottom>
+                {props.userData} 建立於 : {props.articleData.created_at.substring(0,10)} {props.articleData.created_at.substring(11,19)}
+            </Typography>
             <Divider className = {classes.Divider} variant="middle"/>
-            <Typography variant="body1" gutterBottom>
+            <Typography className = {classes.Content}>
                 {props.articleData.content}
             </Typography>
-            <Message props = {props}/>
             <Divider className = {classes.Divider} variant="middle"/>
-            <CreateMessage props = {props}/>
+            <Message props = {props} level = {1}/>
+            <Divider className = {classes.Divider} variant="middle"/>
             {/* 我要回覆 */}
+            <Answer props = {props}/>
         </div>
     );
 }

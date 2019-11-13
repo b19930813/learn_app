@@ -162,7 +162,7 @@ export default function LearnVocabulary() {
         [中譯]:{vocabularies.cnSentence}
         <br />
         <Button variant="contained" color="primary" className={classes.button} onClick = {handleAdd(vocabularies.id)}  >
-           新增單字
+           加入我的單字本
         </Button>
       </Typography>
     </ExpansionPanelDetails>

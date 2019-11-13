@@ -29,7 +29,6 @@ export default function CreateArticle(props) {
         const post = {
             title: title,
             content: content,
-            userID: props.userData.id
           }
         axios
             .post('/api/articles', post)
