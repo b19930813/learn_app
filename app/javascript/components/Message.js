@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     },
     Container : {
         marginTop: "5px",
-
+        background: '#E0FFFF'
     }
 }));
 
@@ -61,7 +61,7 @@ export default function Message(props,level) {
 
     React.useEffect(() => {
         //打api到後台去拿Message，根據文章ID後setMessage渲染
-     
+       // console.log(props);
         getDiscuss();
     }, []);
 
@@ -100,7 +100,9 @@ export default function Message(props,level) {
     let lists = datas.messages.map((message, i) =>
         <div key={message.id} className={classes.Container}  >
             <Typography component="p" fontSize={12}>
-           {(i+1)}. {message.content} - {datas.users[i].email} 
+            {(i+1)}.{datas.users[i].email} - {message.created_at.substring(0,10)} {message.created_at.substring(11,19) }
+            <br/>
+            {message.content} 
             </Typography>
             <Divider className = {classes.Divider} variant="middle"/>
         </div>

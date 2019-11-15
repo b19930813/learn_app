@@ -14,17 +14,18 @@ const useStyles = makeStyles(theme => ({
     },
     Typography: {
         fontSize: "15px",
-        textAlign:"right"
+        textAlign: "right"
     },
-    Container : {
+    Container: {
         paddingLeft: "2%",
         paddingRight: "2%",
-        borderLeft: "medium  solid #99FFFF",
+        borderLeft: "medium  solid #6495ED",
         marginTop: "15px",
-        marginBottom: "15px"
+        marginBottom: "15px",
+        whiteSpace: 'pre-wrap'
     },
     button: {
-      marginTop: "2%"
+        marginTop: "2%"
     }
 }));
 
@@ -39,6 +40,7 @@ export default function Answer(props) {
     });
 
     React.useEffect(() => {
+        
         getAnswer();
     }, []);
 
@@ -82,21 +84,21 @@ export default function Answer(props) {
     }
     //帶出渲染前的資料
     let lists = datas.answers.map((answer, i) =>
-      <div key = {answer.id} className={classes.Container}>  
-            {answer.content.split("\n").map((i,key)=>{
-                return <Typography key={key} paragraph variant="body1">{i}</Typography>;
-            })}
-        <Typography  className = {classes.Typography}>
-       {datas.users[i].email} 於 {answer.created_at.substring(0,10)} {answer.created_at.substring(11,19)} 回覆
-       </Typography>
-        <Divider className = {classes.Divider} variant="middle"/>
-        
-     </div>
+        <div key={answer.id} className={classes.Container}>
+            <Typography >
+                {answer.content}
+            </Typography>
+            <Typography className={classes.Typography}>
+                {datas.users[i].email} 於 {answer.created_at.substring(0, 10)} {answer.created_at.substring(11, 19)} 回覆
+            </Typography>
+            <Divider className={classes.Divider} variant="middle" />
+            {/* <Message props = {props} level = {2}/> */}
+        </div>
     )
     return (
         <div>
             <h1>{count}個回答</h1>
-            { lists } 
+            {lists}
             <h1>我要回答</h1>
             <div>
                 <TextField

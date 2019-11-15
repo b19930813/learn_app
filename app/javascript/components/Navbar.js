@@ -70,7 +70,10 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
   },
-
+subTitle: {
+ marginTop: '2.7%',
+ marginLeft: '0.7%'
+}
 }));
 
 
@@ -122,7 +125,9 @@ export default function Navbar(props) {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMenuOpen}
         onClose={handleMenuClose}
+        className = {classes.subTitle}
       >
+        {/* <h4>{props.userData.email.split('@')[0]}</h4> */}
         <MenuItem onClick={handleMyAccount}>我的帳號</MenuItem>
         <MenuItem >發文</MenuItem>
         <MenuItem onClick={handlelogout}>登出</MenuItem>
@@ -140,6 +145,7 @@ export default function Navbar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+    
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="secondary">
@@ -195,6 +201,7 @@ export default function Navbar(props) {
               color="inherit"
             >
               <AccountCircle />
+              <p style = {{"font-size":"14px"}}>{props.userData.email.split('@')[0]}</p>
             </IconButton>
           </div>
           {renderMobileMenu}
@@ -224,7 +231,7 @@ export default function Navbar(props) {
     console.log('run mail click');
   }
   const handleMyAccount = () => {
-    document.location.href = "myAccount";
+    document.location.href = "./myAccount";
   }
   const handleNotificationClick = () => {
     console.log('run Notify');

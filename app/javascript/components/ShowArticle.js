@@ -8,7 +8,7 @@ import Answer from './Answer'
 const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
-        
+
     },
     Divider:{
         margin: '20px',
@@ -17,6 +17,10 @@ const useStyles = makeStyles(theme => ({
     Content: {
         paddingLeft: "3%",
         paddingRight: "3%",
+    },
+    Border :{
+        borderLeft: "medium  solid #0066FF",
+        paddingLeft: "1%"
     }
 }));
 
@@ -29,6 +33,7 @@ export default function ShowArticle(props) {
 
     return (
         <div className={classes.root}>
+            <div className = {classes.Border}>
             <Typography variant="h4" gutterBottom>
                 {props.articleData.title}
             </Typography>
@@ -41,9 +46,11 @@ export default function ShowArticle(props) {
             </Typography>
             <Divider className = {classes.Divider} variant="middle"/>
             <Message props = {props} level = {1}/>
+            </div>
             <Divider className = {classes.Divider} variant="middle"/>
             {/* 我要回覆 */}
             <Answer props = {props}/>
+           
         </div>
     );
 }
