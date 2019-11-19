@@ -18,6 +18,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -160,9 +161,10 @@ export default function MyVocabulary(props) {
           <br />
           [中譯]:{vocabularies.cnSentence}
           <br />
-          <Button variant="contained" color="secondary" className={classes.button} onClick={handleDelete(vocabularies.id)}>
-            刪除單字
-          </Button>
+          {/* <Button variant="contained" color="secondary" className={classes.button} onClick={handleDelete(vocabularies.id)}>
+            從我的單字本刪除單字
+          </Button> */}
+          <DeleteIcon onClick={handleDelete(vocabularies.id)}/>
         </Typography>
       </ExpansionPanelDetails>
     </ExpansionPanel>)

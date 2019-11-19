@@ -21,7 +21,7 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Pagination from "material-ui-flat-pagination";
-
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const theme = createMuiTheme();
 
@@ -31,8 +31,7 @@ const useStyles = makeStyles(theme => ({
     flexWrap: 'wrap',
   },
   button: {
-    margin: theme.spacing(1),
-    fontSize: theme.typography.pxToRem(10),
+   
   },
   formControl: {
     margin: theme.spacing(1),
@@ -176,9 +175,10 @@ export default function LearnVocabulary(props) {
         <br />
         [中譯]:{vocabularies.cnSentence}
         <br />
-        <Button variant="contained" color="primary" className={classes.button} onClick = {handleAdd(vocabularies.id)}  >
-           新增單字
-        </Button>
+        {/* <Button variant="contained" color="primary" className={classes.button} onClick = {handleAdd(vocabularies.id)}  >
+           加入我的單字本
+        </Button> */}
+        <AddCircleIcon className={classes.button} onClick = {handleAdd(vocabularies.id)}/>
       </Typography>
     </ExpansionPanelDetails>
   </ExpansionPanel>)

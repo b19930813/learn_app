@@ -34,7 +34,7 @@ import SideList from './SideList'
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
-      backgroundColor: theme.palette.common.white,
+      backgroundColor: "#eee",
     },
   },
   paper: {
@@ -72,7 +72,11 @@ const useStyles = makeStyles(theme => ({
   },
 subTitle: {
  marginTop: '2.7%',
- marginLeft: '0.7%'
+ marginLeft: '0.5%',
+ padding: "10%"
+},
+item: {
+  padding: "10%"
 }
 }));
 
@@ -94,6 +98,9 @@ const transPage = (page) => {
     case '討論區':
       document.location.href = "/articles";
       break;
+    case '首頁':
+    document.location.href = "/";
+    break;
   }
 }
 
@@ -129,7 +136,7 @@ export default function Navbar(props) {
       >
         {/* <h4>{props.userData.email.split('@')[0]}</h4> */}
         <MenuItem onClick={handleMyAccount}>我的帳號</MenuItem>
-        <MenuItem >發文</MenuItem>
+        <MenuItem >我的文章</MenuItem>
         <MenuItem onClick={handlelogout}>登出</MenuItem>
       </Menu>
     )
@@ -201,7 +208,7 @@ export default function Navbar(props) {
               color="inherit"
             >
               <AccountCircle />
-              <p style = {{"font-size":"14px"}}>{props.userData.email.split('@')[0]}</p>
+              <p style = {{"fontSize":"14px"}}>{props.userData.email.split('@')[0]}</p>
             </IconButton>
           </div>
           {renderMobileMenu}
@@ -267,6 +274,7 @@ export default function Navbar(props) {
   }
   const handleIndex = () => {
     document.location.href = "/";
+
   }
 
   return (

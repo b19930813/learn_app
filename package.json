@@ -14,7 +14,9 @@
     "react-dom": "^16.9.0",
     "react-paginate": "^6.3.0",
     "react-router": "^5.1.0",
-    "react_ujs": "^2.6.0"
+    "react-slick": "^0.25.2",
+    "react_ujs": "^2.6.0",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.8.0"
