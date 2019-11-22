@@ -76,7 +76,6 @@ export default function MyVocabulary(props) {
         params: {
           ID: VocabularyID,
           searchV: values.searchV,
-          access_token:props.userData.access_token
         }
       })
       .then(response => {

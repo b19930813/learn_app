@@ -56,7 +56,6 @@ export default function MyAccount(props) {
         .put('/api/learn_users/'+props.userData.id,{
             password: password.password,
             confirmPassword: password.confirmPassword,
-            access_token: props.userData.access_token
           })
         .then(response => {
           if (response.data.learn_user) {

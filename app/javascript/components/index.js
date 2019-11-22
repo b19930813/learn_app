@@ -8,9 +8,10 @@ const useStyles = makeStyles(theme => ({
       display:"inline-block"
     },
     News:{
-      width:"40%",
+      width:"35%",
       display:"inline-block",
       paddingLeft:"3%",
+      position: "relative",
     }
   }));
   
