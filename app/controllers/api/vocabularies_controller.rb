@@ -1,5 +1,6 @@
 module API
     class Api::VocabulariesController < ApplicationController
+        protect_from_forgery with: :null_session
         def index
               #沒有分類的情況
               if params['ID'] == '0'

@@ -1,6 +1,6 @@
 module API
     class Api::ArticlesController < ApplicationController
-      
+        protect_from_forgery with: :null_session
         def index
             @articles = Article.all.page(params[:page]).per(10)
         end

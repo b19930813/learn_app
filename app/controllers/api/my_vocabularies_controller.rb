@@ -1,5 +1,6 @@
 module API
     class Api::MyVocabulariesController < ApplicationController
+        protect_from_forgery with: :null_session
         rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
         before_action :isLogin
         def index

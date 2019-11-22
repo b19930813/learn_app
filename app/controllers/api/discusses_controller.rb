@@ -1,5 +1,6 @@
 module API
     class Api::DiscussesController < ApplicationController
+        protect_from_forgery with: :null_session
         def index
        
             discusses = Discuss.includes(:learn_user).where("level = #{params[:level]} and response_id = #{params[:responseID]}")

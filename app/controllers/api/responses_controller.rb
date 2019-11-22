@@ -1,5 +1,6 @@
 module API
     class Api::ResponsesController < ApplicationController
+      protect_from_forgery with: :null_session
       def index
         responses = Response.includes(:learn_user).where("article_id = #{params[:id]}")
         userDatas = responses.map(&:learn_user)

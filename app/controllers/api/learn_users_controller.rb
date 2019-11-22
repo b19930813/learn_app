@@ -1,5 +1,6 @@
 module API
     class Api::LearnUsersController < ApplicationController
+        protect_from_forgery with: :null_session
         def index
             if learn_user_signed_in?
             @learn_user = LearnUser.find(current_learn_user[:id])

@@ -1,6 +1,6 @@
 module API
     class Api::SessionsController < ApplicationController
-      
+      protect_from_forgery with: :null_session
        # acts_as_token_authentication_handler_for LearnUser,fallback_to_devise: false
         #login
         def create
