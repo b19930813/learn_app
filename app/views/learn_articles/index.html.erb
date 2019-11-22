@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Learn Articles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Is avilable</th>
+      <th>Author</th>
+      <th>Level</th>
+      <th>Popular</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @learn_articles.each do |learn_article| %>
+      <tr>
+        <td><%= learn_article.title %></td>
+        <td><%= learn_article.content %></td>
+        <td><%= learn_article.is_avilable %></td>
+        <td><%= learn_article.author %></td>
+        <td><%= learn_article.level %></td>
+        <td><%= learn_article.popular %></td>
+        <td><%= link_to 'Show', learn_article %></td>
+        <td><%= link_to 'Edit', edit_learn_article_path(learn_article) %></td>
+        <td><%= link_to 'Destroy', learn_article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Learn Article', new_learn_article_path %>

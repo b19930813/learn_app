@@ -10,12 +10,18 @@ module API
 
         def create
            if learn_user_signed_in?
-            @articles = Article.new(learn_user_id: current_learn_user[:id], title: params[:title], content: params[:content])
-            if @articles.save
-                render json: {state:200}
-            else
-                render json: {state:400}
-            end
+               #驗證身分
+               user = LearnUser.find(current_learn_user[:id])
+               if user.access_token == params[:access_token]
+                    @articles = Article.new(learn_user_id: current_learn_user[:id], title: params[:title], content: params[:content])
+                    if @articles.save
+                        render json: {state:200}
+                    else
+                        render json: {state:400}
+                    end
+                else
+                    render json: {state:402}
+                end
            else
            render json: {state: 401}
            end

@@ -9,12 +9,10 @@ module API
              if @learnuser.valid_password?(params[:password])
                 sign_in :learn_user, @learnuser
                 if learn_user_signed_in? 
-                  puts 'login!!!'
                   render json: {login: learn_user_signed_in?}
                 end
                 #puts "登入了? = #{learn_user_signed_in?}"
                 #render json: @learnuser, serializer: SessionSerializer, root: nil
-              
               else
                 invalid_password
               end

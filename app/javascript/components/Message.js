@@ -24,12 +24,15 @@ const useStyles = makeStyles(theme => ({
     text :{
         background: '#FFFFFF'
     },
+    message:{
+       paddingLeft: '2%'
+    },
     button: {
         marginLeft: '10px'
     },
     Container : {
         marginTop: "5px",
-        background: '#E0FFFF'
+        background: '#FFFFFF'
     }
 }));
 
@@ -99,7 +102,7 @@ export default function Message(props,level) {
 
     let lists = datas.messages.map((message, i) =>
         <div key={message.id} className={classes.Container}  >
-            <Typography component="p" fontSize={12}>
+            <Typography component="p" fontSize={12} className = {classes.message}>
             {(i+1)}.{datas.users[i].email} - {message.created_at.substring(0,10)} {message.created_at.substring(11,19) }
             <br/>
             {message.content} 

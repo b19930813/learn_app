@@ -19,12 +19,16 @@ module API
         end
 
         def update
-            update_user_params
             @learn_user = LearnUser.find(current_learn_user[:id])
-            if @learn_user.update(update_user_params)
-                render json: {learn_user: @learn_user}
+            #驗證token
+            if @learn_user.access_token == params[:access_token]
+                if @learn_user.update(update_user_params)
+                    render json: {learn_user: @learn_user}
+                else
+                    render json: {state: @learn_user.errors}
+                end
             else
-                render json: {state: @learn_user.errors}
+                render json: {state: "不合法的需求"}
             end
         end
 
@@ -39,5 +43,6 @@ module API
         def update_user_params
             return {password: params[:password]}
         end
+         
     end
 end

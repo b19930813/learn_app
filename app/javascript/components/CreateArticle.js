@@ -7,10 +7,7 @@ import axios from 'axios'
 const useStyles = makeStyles(theme => ({
     margin: {
         margin: theme.spacing(1),
-
-    },
-    test: {
-        margin: theme.spacing(1),
+        background: '#FFFFFF'
     },
 }));
 
@@ -25,25 +22,40 @@ export default function CreateArticle(props) {
     //     console.log(props);
     //   }, []);
 
+    function check() {
+        if (title && content != '') {
+            return true;
+        }
+        else {
+            alert('標題或內容不可留白');
+            return false;
+        }
+    }
     const handleCreateArticle = () => {
-        const post = {
-            title: title,
-            content: content,
-          }
-        axios
-            .post('/api/articles', post)
-            .then(response => {
-                if (response.data.state == 200) {
-                    alert('新增成功');
-                    document.location.href = "articles";
-                }
-                else if (response.data.state == 400) {
-                    alert('新增失敗');
-                }
-                else if (response.data.state == 401) {
-                    alert("請先登入");
-                }
-            })
+        if (check() == true) {
+            const post = {
+                title: title,
+                content: content,
+                access_token: props.userData.access_token
+            }
+            axios
+                .post('/api/articles', post)
+                .then(response => {
+                    if (response.data.state == 200) {
+                        alert('新增成功');
+                        document.location.href = "articles";
+                    }
+                    else if (response.data.state == 400) {
+                        alert('新增失敗');
+                    }
+                    else if (response.data.state == 401) {
+                        alert("請先登入");
+                    }
+                    else if(response.data.state == 402){
+                        alert("使用者驗證錯誤");
+                    }
+                })
+        }
     }
 
     const handleTitleChange = event => {
@@ -69,7 +81,7 @@ export default function CreateArticle(props) {
             <br />
             <div>
                 <TextField
-                    className={classes.test}
+                    className={classes.margin}
                     label="內容"
                     variant="outlined"
                     fullWidth={true}

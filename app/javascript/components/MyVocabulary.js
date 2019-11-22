@@ -60,6 +60,7 @@ export default function MyVocabulary(props) {
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
+    console.log(props);
     values.level = 0;
     if(props.myVocabularies != null){
       setState({ vocabularies: props.myVocabularies})
@@ -69,22 +70,27 @@ export default function MyVocabulary(props) {
     }
   }, []);
 
-
-  const handleChange = event => {
-    setValues(oldValues => ({
-      ...oldValues,
-      [event.target.name]: event.target.value,
-    }));
+  function getMyVocabulary(VocabularyID){
     axios
       .get('/api/my_vocabularies', {
         params: {
-          ID: event.target.value,
-          searchV: values.searchV
+          ID: VocabularyID,
+          searchV: values.searchV,
+          access_token:props.userData.access_token
         }
       })
       .then(response => {
         setState({ vocabularies: response.data.vocabularies });
       })
+  }
+
+  const handleChange = event => {
+    //先setValue後打API
+    setValues(oldValues => ({
+      ...oldValues,
+      [event.target.name]: event.target.value,
+    }));
+    getMyVocabulary(event.target.value);
   };
   const handleSearch = event => {
     let sendV = event.target.value;

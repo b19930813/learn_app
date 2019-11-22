@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+
   devise_for :models
   devise_for :managers
   devise_for :learn_users
@@ -13,7 +14,7 @@ Rails.application.routes.draw do
     resources :discusses
     resources :responses
     resources :adminarticles
-
+    resources :learn_articles
   end
   
   namespace :api, defaults: { format: 'json' } do
@@ -28,16 +29,16 @@ Rails.application.routes.draw do
   end
 
   resources :articles, only: [:show,:index]
-  # test ruotes 
   get 'pages/index'
   get 'pages/login', to: "pages#login"
   get 'pages/show', to: "pages#show"
   get "pages/createPost"
-  get 'learnJP', to: "pages#learnJP"
   get 'learnVocabulary', to: "pages#learnVocabulary"
   get 'myVocabulary', to: "pages#myVocabulary"
   get 'myPlan', to: "pages#myPlan"
   get 'myAccount', to: "pages#myAccount"
   get 'createArticles', to: "pages#createArticle"
+  get 'learnArticles', to: "pages#learnArticle"
+  get 'myArticles', to: 'pages#myArticle'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

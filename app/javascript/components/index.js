@@ -24,9 +24,9 @@ export default function HelloWorld() {
        <div className={classes.News}>
         <News />
       </div>
-      <h1 style = {{"marginTop":"3%"}}>最新文章</h1>
+      <h3 style = {{"marginTop":"1%",marginLeft:"12px"}}>最新文章(暫時寫死)</h3>
       <LearnCard/>
-      <h1 style = {{"marginTop":"3%"}}>熱門文章</h1>
+      <h3 style = {{"marginTop":"1%", marginLeft: "12px"}}>熱門文章(暫時寫死)</h3>
       <LearnCard/>
     </div>
   );

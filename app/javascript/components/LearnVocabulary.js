@@ -66,6 +66,7 @@ export default function LearnVocabulary(props) {
   const [labelWidth, setLabelWidth] = React.useState(0);
   const [offset , setOffset] = React.useState(0);
   React.useEffect(() => {
+        //console.log(props.userData.access_token);
         setState({ vocabularies: props.vocabularies });
         setCount(props.vocabulariesCount)
   },[]);
@@ -73,7 +74,8 @@ export default function LearnVocabulary(props) {
   
   const handleAdd = (vID) => event =>{
     const post = {
-      vocabularyID: vID
+      vocabularyID: vID,
+      access_token: props.userData.access_token
     }
     axios
     .post('/api/my_vocabularies',post)

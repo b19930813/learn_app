@@ -68,7 +68,6 @@ export default function MyAccount(props) {
     text: ''
   });
   const { vertical, horizontal, snackbarOpen } = snackbar;
-
   const handlePassword = event => {
     setPassword(event.target.value);
   }

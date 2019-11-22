@@ -9,35 +9,36 @@ class PagesController < ApplicationController
   def createPost
   end
 
-  def learnJP
-  end
-
   def createArticle
     if isLogin
       user = LearnUser.find(current_learn_user[:id])
-      @userData = { id: user[:id]}
+      @userData = { id: user[:id],access_token: user[:access_token],email: user[:email]}
     else
-      
     end
-    
   end
 
   def learnVocabulary
     @vocabularies = Vocabulary.all.page(params[:page]).per(5)
     @vocabulariesCount = Vocabulary.count
+    #在有登入的情況下回傳userData
+    if isLogin
+      user = LearnUser.find(current_learn_user[:id])
+      @userData = {email: user[:email], id: user[:id], access_token: user[:access_token]}
+    end
   end
 
   def myVocabulary
     @userLogin = isLogin
     if isLogin 
+     user = LearnUser.find(current_learn_user[:id])
      @myVocabularies = Vocabulary.where(id: MyVocabulary.where("learn_user_id = #{current_learn_user[:id]}").select('vocabulary_id'))
+     @userData = {email: user[:email], id: user[:id], access_token: user[:access_token]}
     end
   end
 
-  def myPlan
-    puts LearnUser.find(current_learn_user[:id])
+  def learnArticle
   end
-
+   
   def discuss
     if isLogin 
       user = LearnUser.find(current_learn_user[:id])
@@ -52,12 +53,23 @@ class PagesController < ApplicationController
   def myAccount
     if isLogin
       user = LearnUser.find(current_learn_user[:id])
-      @userData = {email: user[:email], id: user[:id]}
+      @userData = {email: user[:email], id: user[:id], access_token: user[:access_token]}
     else
       render 'pages/login'
     end
   end
   
+  def myArticle
+    if isLogin
+      user = LearnUser.find(current_learn_user[:id])
+      #傳入使用者資料 跟 該 使用者的文章
+      @userData = {email: user[:email], id: user[:id], access_token: user[:access_token]}
+      @articleData = Article.where("learn_user_id = #{user[:id]}")
+    else
+      render 'pages/login'
+    end
+  end
+
   def login
     if isLogin != false
       render 'pages/error'

@@ -97,7 +97,8 @@ export default function LoginForm() {
                 <Grid item xs={12}>
                   <FormControlLabel
                     control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="記住我"
+                    label="記住我(尚未)"
+                    onChange = {() => console.log("run onChange")}
                   />
                 </Grid>
               </Grid>
@@ -109,12 +110,13 @@ export default function LoginForm() {
                 className={classes.submit}
                 onClick={handleLogin}
               >
+              
                 登入
             </Button>
               <Grid container justify="flex-end">
                 <Grid item>
                   <Link href="#" variant="body2">
-                    忘記密碼了?
+                    忘記密碼了?(尚未)
                 </Link>
                 </Grid>
               </Grid>

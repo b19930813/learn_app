@@ -1,0 +1,2 @@
+class LearnArticle < ApplicationRecord
+end

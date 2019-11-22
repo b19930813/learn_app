@@ -84,7 +84,7 @@ item: {
 const transPage = (page) => {
   switch (page) {
     case '日語學習':
-      document.location.href = "/learnJP";
+      document.location.href = "/learnArticles";
       break;
     case '必背單字':
       document.location.href = "/learnVocabulary";
@@ -122,7 +122,9 @@ export default function Navbar(props) {
       setAnchorEl(null);
       handleMobileMenuClose();
     };
-
+    // React.useEffect(() => {
+    //     console.log(props);
+    //   }, []);
     return (
       <Menu
         anchorEl={anchorEl}

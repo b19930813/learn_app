@@ -38,6 +38,7 @@ class ApplicationController < ActionController::Base
 #   def authenticate_error
 #     render json: { error: t('devise.failure.unauthenticated') }, status: 401
 #   end
+
 private
 def Login 
   if learn_user_signed_in? 

@@ -14,7 +14,6 @@ class LearnUser < ApplicationRecord
   validates :email, presence: true
 
   def update_access_token!
-    puts 'run this in learn_user'
     self.access_token = "#{self.id}:#{Devise.friendly_token}"
     save
   end

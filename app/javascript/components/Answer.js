@@ -110,6 +110,7 @@ export default function Answer(props) {
                     rows={10}
                     rowsMax={10}
                     onChange={() => setContent(event.target.value)}
+                    style = {{ background: '#FFFFFF'}}
                 />
             </div>
             <div>
