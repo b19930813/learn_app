@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
-  protect_from_forgery with: :null_session
+
   def index
     @articleDatas =  Article.includes(:learn_user).page(params[:page]).per(10)
     @userDatas = @articleDatas.map(&:learn_user)
