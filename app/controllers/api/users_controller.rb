@@ -1,5 +1,6 @@
 module API
     class Api::UsersController < ApplicationController
+        protect_from_forgery with: :null_session
     def create
         if params['password'] == params['passwordconfirm'] 
         user_params = {email: params['email'] , password: params['password']}

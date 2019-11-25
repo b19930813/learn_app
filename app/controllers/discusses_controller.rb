@@ -1,6 +1,6 @@
 class DiscussesController < ApplicationController
   before_action :set_discuss, only: [:show, :edit, :update, :destroy]
-
+  protect_from_forgery with: :null_session
   # GET /discusses
   # GET /discusses.json
   def index

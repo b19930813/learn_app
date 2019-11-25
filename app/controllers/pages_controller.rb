@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_action :isLogin
+  protect_from_forgery with: :null_session
   def index
   end
 

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  protect_from_forgery with: :null_session
   # GET /users
   # GET /users.json
   def index

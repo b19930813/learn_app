@@ -1,5 +1,6 @@
 module Api
     class PostsController < ApplicationController
+      protect_from_forgery with: :null_session
       def index
         puts learn_user_signed_in?
       end

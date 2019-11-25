@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
     before_action :Login
+    protect_from_forgery with: :null_session
 #     include AbstractController::Translation
 
 
