@@ -122,9 +122,9 @@ export default function Navbar(props) {
       setAnchorEl(null);
       handleMobileMenuClose();
     };
-    // React.useEffect(() => {
-    //     console.log(props);
-    //   }, []);
+    React.useEffect(() => {
+        console.log(props);
+      }, []);
     return (
       <Menu
         anchorEl={anchorEl}

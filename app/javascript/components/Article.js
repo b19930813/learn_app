@@ -18,7 +18,8 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     display: "inline-block",
-    float: "right"
+    float: "right",
+    marginTop: "2%"
   }
 }));
 

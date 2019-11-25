@@ -8,6 +8,7 @@ module API
              return invalid_email unless @learnuser
              if @learnuser.valid_password?(params[:password])
                 sign_in :learn_user, @learnuser
+               
                 if learn_user_signed_in? 
                   render json: {login: learn_user_signed_in?}
                 end
@@ -16,6 +17,7 @@ module API
               else
                 invalid_password
               end
+              puts "learn login = #{learn_user_signed_in?}"
             #render json: {state: 200}
         end
         #logout
