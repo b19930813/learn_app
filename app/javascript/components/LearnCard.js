@@ -54,12 +54,12 @@ export default function LearnCard() {
          <CardActionArea>
            <CardMedia
              className={classes.media}
-             image={require('../pic/N1.png')}
+             image={require('../pic/N2.png')}
              title="Contemplative Reptile"
            />
            <CardContent>
              <Typography gutterBottom variant="h5" component="h2">
-               N1學習筆記
+               N2學習筆記
              </Typography>
              <Typography variant="body2" color="textSecondary" component="p" className = {classes.subContent}>
                每天看片片 晚上尻一發 自然可以進步 
@@ -76,12 +76,12 @@ export default function LearnCard() {
          <CardActionArea>
            <CardMedia
              className={classes.media}
-             image={require('../pic/N1.png')}
+             image={require('../pic/N5.png')}
              title="Contemplative Reptile"
            />
            <CardContent>
              <Typography gutterBottom variant="h5" component="h2">
-               N1學習筆記
+               N5學習筆記
              </Typography>
              <Typography variant="body2" color="textSecondary" component="p" className = {classes.subContent}>
                每天看片片 晚上尻一發 自然可以進步
@@ -98,12 +98,12 @@ export default function LearnCard() {
          <CardActionArea>
            <CardMedia
              className={classes.media}
-             image={require('../pic/N1.png')}
+             image={require('../pic/N4.png')}
              title="Contemplative Reptile"
            />
            <CardContent>
              <Typography gutterBottom variant="h5" component="h2">
-               N1學習筆記
+               N4學習筆記
              </Typography>
              <Typography variant="body2" color="textSecondary" component="p" className = {classes.subContent}>
                每天看片片 晚上尻一發 自然可以進步

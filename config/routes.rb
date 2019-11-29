@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :responses
     resources :adminarticles
     resources :learn_articles
+    resources :learn_users
   end
   
   namespace :api, defaults: { format: 'json' } do
@@ -25,10 +26,14 @@ Rails.application.routes.draw do
     resources :sessions
     resources :discusses, only: [:create, :destroy, :show, :index, :update]
     resources :responses, only: [:create, :destroy, :show, :index, :update]
-    resources :articles, only: [:create, :destroy, :show, :index, :update]
+    resources :articles, only: [:create, :destroy, :show, :index, :update, :edit]
   end
 
   resources :articles, only: [:show,:index]
+  resources :learn_users do
+    resources :my_articles
+  end
+
   get 'pages/index'
   get 'pages/login', to: "pages#login"
   get 'pages/show', to: "pages#show"

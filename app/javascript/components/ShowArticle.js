@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
     Content: {
         paddingLeft: "3%",
         paddingRight: "3%",
+        whiteSpace: 'pre-wrap'
     },
     Border :{
         borderLeft: "medium  solid #0066FF",

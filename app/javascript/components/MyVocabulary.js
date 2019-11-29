@@ -115,7 +115,7 @@ export default function MyVocabulary(props) {
 
   const handleDelete = (vID) => event => {
      axios
-      .delete('/api/my_vocabularies/' + vID)
+      .delete(`api/my_vocabularies/${vID}`)
       .then(response => {
         if(response.data.state ==200){
         axios

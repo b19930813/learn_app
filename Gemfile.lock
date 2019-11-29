@@ -134,6 +134,7 @@ GEM
     nokogiri (1.10.4-x64-mingw32)
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
+    pg (1.1.4-x64-mingw32)
     public_suffix (4.0.1)
     puma (3.12.1)
     rack (2.0.7)
@@ -247,6 +248,7 @@ DEPENDENCIES
   duktape
   jbuilder (~> 2.5)
   kaminari
+  pg
   puma (~> 3.11)
   rack-cors
   rails (~> 5.2.3)

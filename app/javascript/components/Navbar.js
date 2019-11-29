@@ -122,9 +122,9 @@ export default function Navbar(props) {
       setAnchorEl(null);
       handleMobileMenuClose();
     };
-    React.useEffect(() => {
-        console.log(props);
-      }, []);
+    // React.useEffect(() => {
+    //     console.log(props);
+    //   }, []);
     return (
       <Menu
         anchorEl={anchorEl}
@@ -137,8 +137,8 @@ export default function Navbar(props) {
         className = {classes.subTitle}
       >
         {/* <h4>{props.userData.email.split('@')[0]}</h4> */}
-        <MenuItem onClick={handleMyAccount}>我的帳號</MenuItem>
-        <MenuItem >我的文章</MenuItem>
+        <MenuItem onClick={()=> {document.location.href = "/myAccount"}}>我的帳號</MenuItem>
+        <MenuItem onClick={()=>{document.location.href = "/myArticles"}}>我的文章</MenuItem>
         <MenuItem onClick={handlelogout}>登出</MenuItem>
       </Menu>
     )
@@ -191,12 +191,12 @@ export default function Navbar(props) {
         <div>
           {/* <Button color="inherit" onClick = {handlelogout}>登出</Button> */}
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit" onClick={handleMailClick}>
+            <IconButton aria-label="show 4 new mails" color="inherit" onClick={()=>console.log('Mail')}>
               <Badge badgeContent={0} color="secondary">
                 <MailIcon />
               </Badge>
             </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit" onClick={handleNotificationClick}>
+            <IconButton aria-label="show 17 new notifications" color="inherit" onClick={()=>console.log('Notification')}>
               <Badge badgeContent={0} color="secondary">
                 <NotificationsIcon />
               </Badge>
@@ -221,8 +221,8 @@ export default function Navbar(props) {
     else {
       return (
         <div>
-          <Button color="inherit" onClick={handleLoginOpen}>登入</Button>
-          <Button color="inherit" onClick={handleRegisterOpen}>註冊</Button>
+          <Button color="inherit" onClick={()=>setOpen(true)}>登入</Button>
+          <Button color="inherit" onClick={()=> setOpenRes(true)}>註冊</Button>
         </div>
       );
     }
@@ -235,16 +235,6 @@ export default function Navbar(props) {
     setState({ ...state, [side]: open });
   };
 
-  const handleMailClick = () => {
-    //Rails api
-    console.log('run mail click');
-  }
-  const handleMyAccount = () => {
-    document.location.href = "./myAccount";
-  }
-  const handleNotificationClick = () => {
-    console.log('run Notify');
-  }
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -254,29 +244,11 @@ export default function Navbar(props) {
   };
 
   const handlelogout = event => {
-    // console.log(props.userData.id);
     axios
       .delete(`/api/sessions/${props.userData.id}`)
       .then(response => {
         location.reload();
       })
-  }
-
-  const handleRegisterOpen = () => {
-    setOpenRes(true);
-  }
-  const handleResClose = () => {
-    setOpenRes(false);
-  }
-  const handleLoginOpen = () => {
-    setOpen(true);
-  }
-  const handleClose = () => {
-    setOpen(false);
-  }
-  const handleIndex = () => {
-    document.location.href = "/";
-
   }
 
   return (
@@ -286,14 +258,14 @@ export default function Navbar(props) {
           <IconButton edge="start" className={classes.menuButton} onClick={toggleDrawer('left', true)} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title} onClick={handleIndex}>
+          <Typography variant="h6" className={classes.title} onClick={()=>{document.location.href = "/"}}>
             田卷日語
           </Typography>
           {navbarState()}
         </Toolbar>
       </AppBar>
 
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={open} onClose={()=>setOpen(false)} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">田卷日語</DialogTitle>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -310,13 +282,13 @@ export default function Navbar(props) {
           </Box>
         </Container>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={()=>setOpen(false)} color="primary">
             取消
           </Button>
         </DialogActions>
       </Dialog>
 
-      <Dialog open={openRes} onClose={handleResClose} aria-labelledby="form-dialog-title">
+      <Dialog open={openRes} onClose={()=>setOpenRes(false)} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">田卷日語</DialogTitle>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -333,7 +305,7 @@ export default function Navbar(props) {
           </Box>
         </Container>
         <DialogActions>
-          <Button onClick={handleResClose} color="primary">
+          <Button onClick={()=>setOpenRes(false)} color="primary">
             取消
           </Button>
         </DialogActions>

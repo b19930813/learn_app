@@ -49,7 +49,7 @@ module API
                         MyVocabulary.where("learn_user_id = #{current_learn_user['id']} AND vocabulary_id = #{params['id']}").destroy_all
                         render json: { state: 200}
                     rescue => exception 
-                        render jsion: {state: 404}
+                        render json: {state: 404}
                     end
             else
                     render json: {state: 401}
