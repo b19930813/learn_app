@@ -193,6 +193,7 @@ export default function Navbar(props) {
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit" onClick={()=>console.log('Mail')}>
               <Badge badgeContent={0} color="secondary">
+                {/* badgeContent = 頁面的顯示數量 */}
                 <MailIcon />
               </Badge>
             </IconButton>

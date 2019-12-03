@@ -34,6 +34,8 @@ Rails.application.routes.draw do
     resources :my_articles
   end
 
+  resources :read_articles, only: [:index,:show]
+  
   get 'pages/index'
   get 'pages/login', to: "pages#login"
   get 'pages/show', to: "pages#show"
@@ -45,5 +47,6 @@ Rails.application.routes.draw do
   get 'createArticles', to: "pages#createArticle"
   get 'learnArticles', to: "pages#learnArticle"
   get 'myArticles', to: 'pages#myArticle'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -49,7 +49,7 @@ export default function SideList(props){
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        {['首頁','日語學習', '必背單字', '我的單字本', '討論區'].map((text, index) => (
+        {['首頁', '必背單字', '我的單字本', '討論區'].map((text, index) => (
           <ListItem button key={text} onClick={() => changePage(text)}>
             <ListItemIcon>
               {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}

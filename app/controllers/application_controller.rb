@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
     before_action :Login
+    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 #     include AbstractController::Translation
 
 
@@ -46,7 +47,9 @@ def Login
     @userData = {email: user[:email], id: user[:id]}
   end
 end
-
+def record_not_found
+    render plain: "查無資料", status: 404
+end
 
 
 end

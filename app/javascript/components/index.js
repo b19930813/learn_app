@@ -15,8 +15,11 @@ const useStyles = makeStyles(theme => ({
     }
   }));
   
-export default function HelloWorld() {
+export default function Index(props) {
   const classes = useStyles();
+// React.useEffect(() => {
+//   console.log(props);
+// }, [])
   return (
     <div >
        <div className={classes.display}>
@@ -25,10 +28,10 @@ export default function HelloWorld() {
        <div className={classes.News}>
         <News />
       </div>
-      <h3 style = {{"marginTop":"1%",marginLeft:"12px"}}>最新文章(暫時寫死)</h3>
-      <LearnCard/>
-      <h3 style = {{"marginTop":"1%", marginLeft: "12px"}}>熱門文章(暫時寫死)</h3>
-      <LearnCard/>
+      <h3 style = {{"marginTop":"1%",marginLeft:"12px"}}>最新文章</h3>
+      <LearnCard  Data={props.newData}/>
+      <h3 style = {{"marginTop":"1%", marginLeft: "12px"}}>熱門文章</h3>
+      <LearnCard  Data = {props.popularData}/>
     </div>
   );
-}
+} 

@@ -17,105 +17,55 @@ const useStyles = makeStyles({
   media: {
     height: 140,
   },
-  subContent:{
+  subContent: {
     height: 80,
 
+  },
+  main:{
+    display:"inline-block"
   }
 });
-
-export default function LearnCard() {
+//重構LearnCard，修正成從後端拉資料，不是寫死的
+export default function LearnCard(props) {
   const classes = useStyles();
+  // React.useEffect(() => {
+  //   console.log(props.newData);
+  // }, [])
+  const handleCardClick = (articleID) => event =>{
+    document.location.href = `/read_articles/${articleID}`;
+  }
+
+  let lists = props.Data.map((data, i) =>
+    <div key={i} className = {classes.main}>
+      <Card className={classes.card} onClick = {handleCardClick(data.id)}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image={require(`../pic/N${data.level}.png`)}
+            title="Contemplative Reptile"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {data.title}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p" className={classes.subContent} maxLength="15">
+              {data.content.substr(0,40)}...
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Button size="small" color="primary" onClick = {handleCardClick(data.id)}>
+            看更多
+           </Button>
+        </CardActions>
+      </Card>
+    </div>
+  )
+
 
   return (
     <div>
-    <Card className={classes.card}>
-         <CardActionArea>
-           <CardMedia
-             className={classes.media}
-             image={require('../pic/N1.png')}
-             title="Contemplative Reptile"
-           />
-           <CardContent>
-             <Typography gutterBottom variant="h5" component="h2">
-               N1學習筆記
-             </Typography>
-             <Typography variant="body2" color="textSecondary" component="p" className = {classes.subContent}>
-               每天看片片 晚上尻一發 自然可以進步  每天看片自然可以進步...
-             </Typography>
-           </CardContent>
-         </CardActionArea>
-         <CardActions>
-           <Button size="small" color="primary">
-             看更多
-           </Button>
-         </CardActions>
-       </Card>
-       <Card className={classes.card}>
-         <CardActionArea>
-           <CardMedia
-             className={classes.media}
-             image={require('../pic/N2.png')}
-             title="Contemplative Reptile"
-           />
-           <CardContent>
-             <Typography gutterBottom variant="h5" component="h2">
-               N2學習筆記
-             </Typography>
-             <Typography variant="body2" color="textSecondary" component="p" className = {classes.subContent}>
-               每天看片片 晚上尻一發 自然可以進步 
-             </Typography>
-           </CardContent>
-         </CardActionArea>
-         <CardActions>
-           <Button size="small" color="primary">
-             看更多
-           </Button>
-         </CardActions>
-       </Card>
-       <Card className={classes.card}>
-         <CardActionArea>
-           <CardMedia
-             className={classes.media}
-             image={require('../pic/N5.png')}
-             title="Contemplative Reptile"
-           />
-           <CardContent>
-             <Typography gutterBottom variant="h5" component="h2">
-               N5學習筆記
-             </Typography>
-             <Typography variant="body2" color="textSecondary" component="p" className = {classes.subContent}>
-               每天看片片 晚上尻一發 自然可以進步
-             </Typography>
-           </CardContent>
-         </CardActionArea>
-         <CardActions>
-           <Button size="small" color="primary">
-             看更多
-           </Button>
-         </CardActions>
-       </Card>
-       <Card className={classes.card}>
-         <CardActionArea>
-           <CardMedia
-             className={classes.media}
-             image={require('../pic/N4.png')}
-             title="Contemplative Reptile"
-           />
-           <CardContent>
-             <Typography gutterBottom variant="h5" component="h2">
-               N4學習筆記
-             </Typography>
-             <Typography variant="body2" color="textSecondary" component="p" className = {classes.subContent}>
-               每天看片片 晚上尻一發 自然可以進步
-             </Typography>
-           </CardContent>
-         </CardActionArea>
-         <CardActions>
-           <Button size="small" color="primary">
-             看更多
-           </Button>
-         </CardActions>
-       </Card>
-       </div>
+      {lists}
+    </div>
   );
 }

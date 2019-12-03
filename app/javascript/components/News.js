@@ -38,7 +38,7 @@ export default function News(props) {
     return (
      <MuiThemeProvider theme={THEME}>
             
-            <h2>最新消息(寫死的)</h2>
+            <h2>最新消息</h2>
             <Paper className={classes.paper} elevation = {5} >
               
                 <Typography variant="h5" component="h3" className = {classes.Title}>

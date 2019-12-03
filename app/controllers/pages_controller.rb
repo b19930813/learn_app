@@ -1,6 +1,9 @@
 class PagesController < ApplicationController
   before_action :isLogin
   def index
+    #傳送兩種資料 最新 跟 熱門
+    @newData = LearnArticle.order("created_at DESC").take(4)
+    @popularData = LearnArticle.order("popular DESC").take(4)
   end
 
   def show
