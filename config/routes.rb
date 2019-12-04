@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :discusses, only: [:create, :destroy, :show, :index, :update]
     resources :responses, only: [:create, :destroy, :show, :index, :update]
     resources :articles, only: [:create, :destroy, :show, :index, :update, :edit]
+    resources :my_articles, only: [:index]
   end
 
   resources :articles, only: [:show,:index]
@@ -46,7 +47,5 @@ Rails.application.routes.draw do
   get 'myAccount', to: "pages#myAccount"
   get 'createArticles', to: "pages#createArticle"
   get 'learnArticles', to: "pages#learnArticle"
-  get 'myArticles', to: 'pages#myArticle'
-
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -2,8 +2,10 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
-    @articleDatas =  Article.includes(:learn_user).page(params[:page]).order("updated_at DESC")
+    @articleDatas =  Article.includes(:learn_user).page(params[:page]).order("updated_at DESC").per(5)
     @userDatas = @articleDatas.map(&:learn_user)
+    #傳送一包Count作為頁簽用
+    @articleCount = Article.count
   end
 
   def show

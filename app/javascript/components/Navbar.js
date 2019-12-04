@@ -138,7 +138,7 @@ export default function Navbar(props) {
       >
         {/* <h4>{props.userData.email.split('@')[0]}</h4> */}
         <MenuItem onClick={()=> {document.location.href = "/myAccount"}}>我的帳號</MenuItem>
-        <MenuItem onClick={()=>{document.location.href = "/myArticles"}}>我的文章</MenuItem>
+        <MenuItem onClick={()=>{document.location.href = `/learn_users/${props.userData.id}/my_articles`}}>我的文章</MenuItem>
         <MenuItem onClick={handlelogout}>登出</MenuItem>
       </Menu>
     )
@@ -191,17 +191,7 @@ export default function Navbar(props) {
         <div>
           {/* <Button color="inherit" onClick = {handlelogout}>登出</Button> */}
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit" onClick={()=>console.log('Mail')}>
-              <Badge badgeContent={0} color="secondary">
-                {/* badgeContent = 頁面的顯示數量 */}
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit" onClick={()=>console.log('Notification')}>
-              <Badge badgeContent={0} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+           
             <IconButton
               edge="end"
               aria-label="account of current user"

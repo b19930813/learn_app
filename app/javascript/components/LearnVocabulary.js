@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     flexWrap: 'wrap',
   },
   button: {
-   
+
   },
   formControl: {
     margin: theme.spacing(1),
@@ -54,41 +54,41 @@ export default function LearnVocabulary(props) {
   const [values, setValues] = React.useState({
     level: 0,
     values: '',
-    typingTimeout:0,
+    typingTimeout: 0,
     searchV: '',
   });
   const [state, setState] = React.useState({
     vocabularies: [],
   });
-  const [count,setCount] = React.useState(false);
+  const [count, setCount] = React.useState(0);
   const [search, setSearch] = React.useState(0);
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
-  const [offset , setOffset] = React.useState(0);
+  const [offset, setOffset] = React.useState(0);
   React.useEffect(() => {
-        //console.log(props.userData.access_token);
-        setState({ vocabularies: props.vocabularies });
-        setCount(props.vocabulariesCount)
-  },[]);
+    //console.log(props.userData.access_token);
+    setState({ vocabularies: props.vocabularies });
+    setCount(props.vocabulariesCount)
+  }, []);
 
-  
-  const handleAdd = (vID) => event =>{
+
+  const handleAdd = (vID) => event => {
     const post = {
       vocabularyID: vID,
     }
     axios
-    .post('/api/my_vocabularies',post)
-    .then(response => {
-      if(response.data.state == 200){
-        alert('新增成功');
-      }
-      else if(response.data.state == 400){
-        alert('新增失敗');
-      }
-      else if(response.data.state == 401){
-        alert("請先登入");
-      }
-    })
+      .post('/api/my_vocabularies', post)
+      .then(response => {
+        if (response.data.state == 200) {
+          alert('新增成功');
+        }
+        else if (response.data.state == 400) {
+          alert('新增失敗');
+        }
+        else if (response.data.state == 401) {
+          alert("請先登入");
+        }
+      })
   }
 
   const handleChange = event => {
@@ -116,28 +116,28 @@ export default function LearnVocabulary(props) {
     setValues(oldValues => ({
       ...oldValues,
       searchV: sendV,
-      typingTimeout: setTimeout(()=>{
+      typingTimeout: setTimeout(() => {
         axios
-        .get('/api/vocabularies', {
-          params: {
-            ID: values.level,
-            searchV: sendV
-          }
-        })
-        .then(response => {
-          setState({ vocabularies: response.data.vocabularies });
-        })
-     },1000)
+          .get('/api/vocabularies', {
+            params: {
+              ID: values.level,
+              searchV: sendV
+            }
+          })
+          .then(response => {
+            setState({ vocabularies: response.data.vocabularies });
+          })
+      }, 1000)
     }));
   }
 
   const handlePageClick = event => {
-     axios
+    axios
       .get('/api/vocabularies', {
         params: {
           ID: values.level,
           searchV: values.searchV,
-          page: (event/5)+1
+          page: (event / 5) + 1
         }
       })
       .then(response => {
@@ -148,41 +148,41 @@ export default function LearnVocabulary(props) {
   }
 
   let lists = state.vocabularies.map((vocabularies, i) =>
-  <ExpansionPanel key={vocabularies.id}>
-    <ExpansionPanelSummary
-      expandIcon={<ExpandMoreIcon />}
-      aria-controls="panel1a-content"
-      id="panel1a-header"
-    >
-      <Typography className={classes.heading}>
-        <span>
-          {vocabularies.jpVocabulary}
-        </span>
-        <span>
-          [{vocabularies.katakana}] :
+    <ExpansionPanel key={vocabularies.id}>
+      <ExpansionPanelSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a-content"
+        id="panel1a-header"
+      >
+        <Typography className={classes.heading}>
+          <span>
+            {vocabularies.jpVocabulary}
+          </span>
+          <span>
+            [{vocabularies.katakana}] :
     </span>
-        <span>
-          {vocabularies.cnVocabulary} /
+          <span>
+            {vocabularies.cnVocabulary} /
     </span>
-        <span>
-          {vocabularies.pos}
-        </span>
-      </Typography>
-    </ExpansionPanelSummary>
-    <Divider />
-    <ExpansionPanelDetails>
-      <Typography>
-        [例句]:{vocabularies.jpSentence}
-        <br />
-        [中譯]:{vocabularies.cnSentence}
-        <br />
-        {/* <Button variant="contained" color="primary" className={classes.button} onClick = {handleAdd(vocabularies.id)}  >
+          <span>
+            {vocabularies.pos}
+          </span>
+        </Typography>
+      </ExpansionPanelSummary>
+      <Divider />
+      <ExpansionPanelDetails>
+        <Typography>
+          [例句]:{vocabularies.jpSentence}
+          <br />
+          [中譯]:{vocabularies.cnSentence}
+          <br />
+          {/* <Button variant="contained" color="primary" className={classes.button} onClick = {handleAdd(vocabularies.id)}  >
            加入我的單字本
         </Button> */}
-        <AddCircleIcon className={classes.button} onClick = {handleAdd(vocabularies.id)}/>
-      </Typography>
-    </ExpansionPanelDetails>
-  </ExpansionPanel>)
+          <AddCircleIcon className={classes.button} onClick={handleAdd(vocabularies.id)} />
+        </Typography>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>)
 
   return (
     <div>
@@ -220,15 +220,12 @@ export default function LearnVocabulary(props) {
       </form>
       <Divider style={{ 'marginTop': '20px' }} />
       {lists}
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <Pagination
-          limit={5}
-          offset={offset}
-          total={count}
-          onClick={(e, offset) => handlePageClick(offset)}
-        />
-      </MuiThemeProvider>
+      <Pagination
+        limit={5}
+        offset={offset}
+        total={count}
+        onClick={(e, offset) => handlePageClick(offset)}
+      />
     </div>
   );
 }

@@ -2,7 +2,10 @@ module API
     class Api::ArticlesController < ApplicationController
         protect_from_forgery with: :null_session
         def index
-            @articles = Article.all.page(params[:page]).per(10)
+            articleDatas = Article.all.page(params[:page]).order("created_at DESC").per(5)
+            userDatas = articleDatas.map(&:learn_user)
+            articleCount = Article.count
+            render json: {articleDatas: articleDatas , userDatas: userDatas,articleCount:articleCount}
         end
 
         def show
