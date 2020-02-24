@@ -6,7 +6,7 @@ module API
               if params['ID'] == '0'
                 if params['searchV'].empty?
                    vocabularies = Vocabulary.all.page(params[:page]).per(5)
-                   count = Vocabulary.all.count
+                   count = Vocabulary.count
                 else
                    vocabularies = Vocabulary.where("katakana like '%#{params['searchV']}%' OR cnVocabulary like '%#{params['searchV']}%'").page(params[:page]).per(5)
                    count = Vocabulary.where("katakana like '%#{params['searchV']}%' OR cnVocabulary like '%#{params['searchV']}%'").count

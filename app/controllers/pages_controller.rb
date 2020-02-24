@@ -88,6 +88,7 @@ class PagesController < ApplicationController
   def error
   end
 
+
   private
   def isLogin
     learn_user_signed_in?
