@@ -71,6 +71,7 @@ export default function Answer(props) {
             .post('/api/responses', post)
             .then(response => {
                 if (response.data.state == 200) {
+                    document.getElementById('content').value = '';
                     alert('回答成功');
                     getAnswer();
                 }
@@ -103,6 +104,7 @@ export default function Answer(props) {
             <div>
                 <TextField
                     className={classes.test}
+                    id="content"
                     label="內容"
                     variant="outlined"
                     fullWidth={true}

@@ -69,9 +69,6 @@ export default function Message(props,level) {
     }, []);
 
      
-    const handleContentChange = event => {
-        setContent(event.target.value);
-    }
 
     const handleMessageSubmit = () => {
         //打API，後端確認是否登入
@@ -84,8 +81,9 @@ export default function Message(props,level) {
             .post('/api/discusses', post)
             .then(response => {
                 if (response.data.state == 200) {
+                    document.getElementById('message').value = '';
                     alert('留言成功');
-                    getDiscuss();
+                    getDiscuss();//重新取得最新留言
                 }
                 else if (response.data.state == 400) {
                     alert('新增失敗');
@@ -126,13 +124,14 @@ export default function Message(props,level) {
 
                     <TextField
                         className={classes.text}
+                        id="message"
                         label="內容"
                         variant="outlined"
                         fullWidth={true}
                         multiline={true}
                         rows={1}
                         rowsMax={1}
-                        onChange={handleContentChange}
+                        onChange={()=>setContent(event.target.value)}
                     />
                     <Button
                     className = {classes.button}

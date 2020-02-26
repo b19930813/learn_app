@@ -68,17 +68,7 @@ export default function MyAccount(props) {
     text: ''
   });
   const { vertical, horizontal, snackbarOpen } = snackbar;
-  const handlePassword = event => {
-    setPassword(event.target.value);
-  }
   
-  const handleConfirmPassword = event =>{
-    setConfirmPassword(event.target.value)
-  }
-  
-  const handleEmail = event =>{
-   setEmail(event.target.value);
-  }
   
   const handleSnackbarOpen = (newstate) => {
     setSnackbar({ snackbarOpen: true, ...newstate });
@@ -107,21 +97,32 @@ export default function MyAccount(props) {
           }
           else {
             handleSnackbarOpen({ vertical: 'top', horizontal: 'center', text: '註冊失敗，帳號已被使用過' })
+            //清空密碼跟確認密碼
+            clear_user_data();
           }
         })
     }
+  }
+  const clear_user_data = () =>{
+    setPassword('');
+    setConfirmPassword('');
+    document.getElementById('RegisterpasswordConfirm').value = '';
+    document.getElementById('password').value = '';
   }
   //先暫定這樣 之後修改
   const userdataVerfication = () => {
     let emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
     if (password != confirmPassword) {
       handleSnackbarOpen({ vertical: 'bottom', horizontal: 'center', text: '密碼跟確認密碼不一致' });
+      clear_user_data();
     }
     else if (password.length < 6) {
       handleSnackbarOpen({ vertical: 'bottom', horizontal: 'center', text: '密碼必須要大於6碼' });
+      clear_user_data();
     }
     else if (email.search(emailRule) == -1) {
       handleSnackbarOpen({ vertical: 'bottom', horizontal: 'center', text: '請輸入正確格式的email' });
+      clear_user_data();
     }
     else {
       return true;
@@ -134,7 +135,7 @@ export default function MyAccount(props) {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <TextField
-          onChange={handleEmail}
+          onChange={()=>setEmail(event.target.value)}
           variant="outlined"
           required
           fullWidth
@@ -146,7 +147,7 @@ export default function MyAccount(props) {
       </Grid>
       <Grid item xs={12}>
         <TextField
-          onChange={handlePassword}
+          onChange={()=>setPassword(event.target.value)}
           variant="outlined"
           required
           fullWidth
@@ -161,7 +162,7 @@ export default function MyAccount(props) {
       </Grid>
       <Grid item xs={12}>
         <TextField
-          onChange={handleConfirmPassword}
+          onChange={()=>setConfirmPassword(event.target.value)}
           variant="outlined"
           required
           fullWidth

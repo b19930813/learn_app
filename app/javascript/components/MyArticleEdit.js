@@ -78,7 +78,7 @@ export default function CreateArticle(props) {
                 .then(response => {
                     if (response.data.state == 200) {
                         alert('刪除成功');
-                        document.location.href = "/myArticles";
+                        document.location.href = `..`;
                     }
                     else if (response.data.state == 400) {
                         alert('刪除失敗');

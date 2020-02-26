@@ -61,6 +61,9 @@ export default function LoginForm() {
         }
         else {
           alert('登入失敗，請確認帳號密碼是否正確');
+          //清空
+          setPassword('');
+          document.getElementById('password').value = '';
         }
       })
   }
@@ -94,13 +97,13 @@ export default function LoginForm() {
                     onChange={handlePassword}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <FormControlLabel
                     control={<Checkbox value="allowExtraEmails" color="primary" />}
                     label="記住我(尚未)"
                     onChange = {() => console.log("run onChange")}
                   />
-                </Grid>
+                </Grid> */}
               </Grid>
               <Button
                 type="submit"
@@ -115,9 +118,9 @@ export default function LoginForm() {
             </Button>
               <Grid container justify="flex-end">
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  {/* <Link href="#" variant="body2">
                     忘記密碼了?(尚未)
-                </Link>
+                </Link> */}
                 </Grid>
               </Grid>
             </form>
