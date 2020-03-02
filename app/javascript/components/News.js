@@ -12,7 +12,12 @@ const useStyles = makeStyles(theme => ({
     },
     Title: {
       marginLeft: "5%",
-      paddingTop: "3%"
+      paddingTop: "3%",
+      "fontFamily": "Microsoft JhengHei",
+      "fontSize": 16,
+      "fontWeightLight": 300,
+      "fontWeightRegular": 400,
+      "fontWeightMedium": 500,
     },
     Date: {
         textAlign:"right",
@@ -23,13 +28,13 @@ const useStyles = makeStyles(theme => ({
 export default function News(props) {
     const classes = useStyles();
     const THEME = createMuiTheme({
-        typography: {
-         "fontFamily": "Microsoft JhengHei",
-         "fontSize": 12,
-         "fontWeightLight": 300,
-         "fontWeightRegular": 400,
-         "fontWeightMedium": 500,
-        }
+        // typography: {
+        //  "fontFamily": "Microsoft JhengHei",
+        //  "fontSize": 12,
+        //  "fontWeightLight": 300,
+        //  "fontWeightRegular": 400,
+        //  "fontWeightMedium": 500,
+        // }
      });
     // React.useEffect(() => {
     //     console.log(props);

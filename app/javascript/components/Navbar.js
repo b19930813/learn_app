@@ -56,6 +56,8 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+    "fontFamily": "Microsoft JhengHei",
+    "fontSize": 16,
   },
   button: {
     border: 0,
