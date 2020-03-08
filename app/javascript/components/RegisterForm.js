@@ -184,13 +184,13 @@ export default function MyAccount(props) {
     >
       註冊
   </Button>
-    <Grid container justify="flex-end">
+    {/* <Grid container justify="flex-end">
       <Grid item>
         <Link href="#" variant="body2">
           已經有帳號了? 登入
       </Link>
       </Grid>
-    </Grid>
+    </Grid> */}
     <Snackbar
       anchorOrigin={{ vertical, horizontal }}
       open={snackbarOpen}

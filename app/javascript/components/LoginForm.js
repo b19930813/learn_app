@@ -113,13 +113,13 @@ export default function LoginForm() {
               
                 登入
             </Button>
-              <Grid container justify="flex-end">
+              {/* <Grid container justify="flex-end">
                 <Grid item>
                   <Link href="#" variant="body2">
                     忘記密碼了?(尚未)
                 </Link>
                 </Grid>
-              </Grid>
+              </Grid> */}
             </form>
     </div>
   );

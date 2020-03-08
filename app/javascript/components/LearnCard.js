@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   card: {
-    width: 250,
+    width: 220,
     display: "inline-block",
     margin: "15px",
   },
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     display:"inline-block"
   }
 });
-//重構LearnCard，修正成從後端拉資料，不是寫死的
+//重構LearnCard，修正成從後端拉資料
 export default function LearnCard(props) {
   const classes = useStyles();
   // React.useEffect(() => {
