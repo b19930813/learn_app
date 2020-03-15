@@ -30,12 +30,13 @@ module API
             #user login
             if learn_user_signed_in? 
                 user = LearnUser.find(current_learn_user['id'])
-                    @myVocabulary = MyVocabulary.new(learn_user_id: current_learn_user['id'], vocabulary_id: params['vocabularyID'])
-                    if @myVocabulary.save
-                        render json: { state: 200}
-                    else
-                        render json: { state: 400 }
-                    end
+                user.myVocabulary.new(vocabulary_id: vocabulary_params)
+                if user.save
+                    render json: { state: 200}
+                else
+                    render json: { state: 400 }
+                end
+                
             else
                 render json: {state:401}
             end
@@ -59,6 +60,11 @@ module API
         private
         def record_not_found
             render plain: "查不到要加入的單字"
+        end
+        
+        #單字
+        def vocabulary_params
+            params.require(:vocabularyID)
         end
     end
 end

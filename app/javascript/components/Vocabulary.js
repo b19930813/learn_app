@@ -77,7 +77,7 @@ export default function LearnVocabulary() {
   const handleAdd = (vID) => event =>{
     
     const post = {
-      vocabularyID: vID
+      vocabulary: vID
     }
     axios
     .post('/api/my_vocabularies',post)
