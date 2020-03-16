@@ -1,24 +1,26 @@
-# README
+# Learn App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+記憶日文單字，學習討論區，會員系統。
 
-Things you may want to cover:
+## Using
 
-* Ruby version
+execute:
 
-* System dependencies
+    $ bundle install
+    $ rails db:migrate
+    $ rails s
 
-* Configuration
+## 基本功能
+* ```會員登入``` 登入會員。
+* ```會員註冊``` 註冊會員。
+* ```必備單字``` 根據單字分類，查詢單字(須從後台頁面加入單字)，可使用收藏加入個人單字表。
+* ```我的單字``` 顯示使用者收藏的單字，可做刪除。
+* ```討論區``` 分享遇到學習的問題，有新增文章、修改文章、刪除文章、回覆留言等功能。
+* 
+## Powered by
+* Ruby On Rails 
+* React
+* Devise
+* Webpack
 
-* Database creation
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
