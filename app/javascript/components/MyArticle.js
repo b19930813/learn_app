@@ -38,15 +38,12 @@ export default function MyArticle(props) {
   })
   const [count,setCount] = React.useState(0);
   React.useEffect(() => {
-    //console.log(props);
    setArticleData({article:props.articleData})
    setCount(props.articleCount)
   }, []);
 
   const handleClick = (id) => event => {
-    //console.log(props.userData);
     document.location.href = `my_articles/${id}/edit`;
-    ///learn_users/:learn_user_id/my_articles/:id/edit
   }
 
   const handlePageClick = event => {
@@ -57,9 +54,8 @@ export default function MyArticle(props) {
         }
       })
       .then(response => {
-        //console.log(response.data);
-        setArticleData({article: response.data.articleDatas})
-        setCount(response.data.articleCount);
+         setArticleData({article: response.data.articleDatas})
+         setCount(response.data.articleCount);
       })
     setOffset(event);
   }

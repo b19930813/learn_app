@@ -14,26 +14,23 @@ module API
         def create
            if learn_user_signed_in?
                #驗證身分
-               user = LearnUser.find(current_learn_user[:id])
-                    @articles = Article.new(learn_user_id: current_learn_user[:id], title: params[:title], content: params[:content])
-                    if @articles.save
-                        render json: {state:200}
-                    else
-                        render json: {state:400}
-                    end
-           else
-           render json: {state: 401}
-           end
+                user = LearnUser.find(current_learn_user[:id])
+                begin
+                    article1 = Article.new(article_params)
+                    user.article << article1
+                    render json: {state:200}
+                rescue => exception
+                    render json: {state:400}
+                end
+            else
+            render json: {state: 401}
+            end
         end
 
         def destroy
-         
             if user_verification
                 begin
-                    #不知道為啥無法刪除
-                    # my_article = Article.find_by(params[:id])
-                    # my_articel.destroy
-                    Article.where("id = #{params[:id]}").destroy_all
+                    Article.where(id: params[:id]).destroy_all
                     render json: {state:200}
                 rescue => exception
                     render json: {state:400}
@@ -48,9 +45,9 @@ module API
             #判斷是否登入
             #驗證身分: 文章id必須與當前使用者相符
             if user_verification
-                my_article = Article.find_by(params[:id])
-                my_article.title = params[:title]
-                my_article.content = params[:content]
+                my_article = Article.find(params[:id].to_i)
+                my_article.title = article_params[:title]
+                my_article.content = article_params[:content]
                 if my_article.save
                     render json: {state: 200}
                 else
@@ -70,12 +67,15 @@ module API
                 render json: {state: 401}
                 return false
             elsif params[:userID]  != current_learn_user[:id]
-                
                 render json: {state: 402}
                 return false
             else
                 return true
             end
+        end
+
+        def article_params
+            params.require(:article).permit(:title,:content)
         end
 
     end

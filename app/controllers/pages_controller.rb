@@ -31,11 +31,10 @@ class PagesController < ApplicationController
   end
 
   def myVocabulary
-    @userLogin = isLogin
     if isLogin 
-     user = LearnUser.find(current_learn_user[:id])
-     @myVocabularies = Vocabulary.where(id: MyVocabulary.where("learn_user_id = #{current_learn_user[:id]}").select('vocabulary_id'))
-     @userData = {email: user[:email], id: user[:id], access_token: user[:access_token]}
+    user = LearnUser.includes(:myVocabulary).find(current_learn_user[:id])
+    @myVocabularies = user.myVocabulary.map(&:vocabulary)
+    @userData = user
     end
   end
 

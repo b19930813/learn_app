@@ -2,7 +2,6 @@ import React from 'react';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Message from './Message'
 import Answer from './Answer'
 
 const useStyles = makeStyles(theme => ({

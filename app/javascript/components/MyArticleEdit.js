@@ -68,7 +68,7 @@ export default function CreateArticle(props) {
     }
 
     const handleDeleteArticle = event => {
-        console.log(props.userData.id);
+ 
         if (check() == true) {
             const data = {
                 userID:props.userData.id
@@ -78,7 +78,7 @@ export default function CreateArticle(props) {
                 .then(response => {
                     if (response.data.state == 200) {
                         alert('刪除成功');
-                        document.location.href = "/myArticles";
+                        document.location.href = `..`;
                     }
                     else if (response.data.state == 400) {
                         alert('刪除失敗');
@@ -98,7 +98,7 @@ export default function CreateArticle(props) {
             const data = {
                 title: article.title,
                 content: article.content,
-                userID: props.userData.id
+                userID: props.userData.id,
             }
             axios
                 .put(`/api/articles/${props.article.id}`, data)

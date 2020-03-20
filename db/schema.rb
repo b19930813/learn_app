@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_20_090841) do
+ActiveRecord::Schema.define(version: 2020_03_17_033227) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -23,15 +23,24 @@ ActiveRecord::Schema.define(version: 2019_11_20_090841) do
     t.index ["learn_user_id"], name: "index_articles_on_learn_user_id"
   end
 
-  create_table "discusses", force: :cascade do |t|
+  create_table "discuss_articles", force: :cascade do |t|
     t.text "content"
-    t.integer "level"
-    t.integer "response_id"
-    t.integer "learn_user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["learn_user_id"], name: "index_discusses_on_learn_user_id"
-    t.index ["response_id"], name: "index_discusses_on_response_id"
+    t.integer "article_id", null: false
+    t.integer "learn_user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_discuss_articles_on_article_id"
+    t.index ["learn_user_id"], name: "index_discuss_articles_on_learn_user_id"
+  end
+
+  create_table "discuss_responses", force: :cascade do |t|
+    t.text "content"
+    t.integer "response_id", null: false
+    t.integer "learn_user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["learn_user_id"], name: "index_discuss_responses_on_learn_user_id"
+    t.index ["response_id"], name: "index_discuss_responses_on_response_id"
   end
 
   create_table "learn_articles", force: :cascade do |t|
@@ -127,6 +136,10 @@ ActiveRecord::Schema.define(version: 2019_11_20_090841) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "discuss_articles", "articles"
+  add_foreign_key "discuss_articles", "learn_users"
+  add_foreign_key "discuss_responses", "learn_users"
+  add_foreign_key "discuss_responses", "responses"
   add_foreign_key "my_vocabularies", "learn_users"
   add_foreign_key "my_vocabularies", "vocabularies"
 end

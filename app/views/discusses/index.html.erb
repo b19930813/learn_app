@@ -6,7 +6,6 @@
   <thead>
     <tr>
       <th>Content</th>
-      <th>Level</th>
       <th>Response</th>
       <th>Learn user</th>
       <th colspan="3"></th>
@@ -17,12 +16,9 @@
     <% @discusses.each do |discuss| %>
       <tr>
         <td><%= discuss.content %></td>
-        <td><%= discuss.level %></td>
-        <td><%= discuss.response %></td>
-        <td><%= discuss.learn_user %></td>
+        <td><%= discuss.article.title %></td>
+        <td><%= discuss.learn_user.email %></td>
         <td><%= link_to 'Show', discuss %></td>
-        <td><%= link_to 'Edit', edit_discuss_path(discuss) %></td>
-        <td><%= link_to 'Destroy', discuss, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

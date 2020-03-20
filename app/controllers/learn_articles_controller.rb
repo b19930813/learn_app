@@ -1,4 +1,5 @@
 class LearnArticlesController < ApplicationController
+  before_action :authenticate_manager!
   before_action :set_learn_article, only: [:show, :edit, :update, :destroy]
 
   # GET /learn_articles

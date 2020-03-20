@@ -94,13 +94,13 @@ export default function LoginForm() {
                     onChange={handlePassword}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <FormControlLabel
                     control={<Checkbox value="allowExtraEmails" color="primary" />}
                     label="記住我(尚未)"
                     onChange = {() => console.log("run onChange")}
                   />
-                </Grid>
+                </Grid> */}
               </Grid>
               <Button
                 type="submit"

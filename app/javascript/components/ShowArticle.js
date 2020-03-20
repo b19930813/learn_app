@@ -46,7 +46,7 @@ export default function ShowArticle(props) {
                 {props.articleData.content}
             </Typography>
             <Divider className = {classes.Divider} variant="middle"/>
-            <Message props = {props} level = {1}/>
+            <Message props = {props}/>
             </div>
             <Divider className = {classes.Divider} variant="middle"/>
             {/* 我要回覆 */}

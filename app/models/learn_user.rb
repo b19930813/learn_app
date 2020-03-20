@@ -1,8 +1,9 @@
 class LearnUser < ApplicationRecord
   :confirmable
   has_many :myVocabulary
-  has_many :discuss
+  has_many :discuss_article
   has_many :article
+  has_many :response
   
   extend Devise::Models
   # Include default devise modules. Others available are:

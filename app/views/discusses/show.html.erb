@@ -5,10 +5,6 @@
   <%= @discuss.content %>
 </p>
 
-<p>
-  <strong>Level:</strong>
-  <%= @discuss.level %>
-</p>
 
 <p>
   <strong>Response:</strong>
@@ -20,5 +16,5 @@
   <%= @discuss.learn_user %>
 </p>
 
-<%= link_to 'Edit', edit_discuss_path(@discuss) %> |
-<%= link_to 'Back', discusses_path %>
+<%= link_to 'Edit', edit_discuss_article_path(@discuss) %> |
+<%= link_to 'Back', discusses_article_path %>

@@ -60,7 +60,6 @@ export default function MyVocabulary(props) {
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
-    console.log(props);
     values.level = 0;
     if(props.myVocabularies != null){
       setState({ vocabularies: props.myVocabularies})
@@ -166,9 +165,7 @@ export default function MyVocabulary(props) {
           <br />
           [中譯]:{vocabularies.cnSentence}
           <br />
-          {/* <Button variant="contained" color="secondary" className={classes.button} onClick={handleDelete(vocabularies.id)}>
-            從我的單字本刪除單字
-          </Button> */}
+
           <DeleteIcon onClick={handleDelete(vocabularies.id)}/>
         </Typography>
       </ExpansionPanelDetails>

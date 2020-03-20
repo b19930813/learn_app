@@ -2,15 +2,11 @@ class MyArticlesController < ApplicationController
     before_action :set_article, only: [:show, :edit, :update, :destroy]
   
     def index
-      user_check
-     # @articleDatas =  Article.where("learn_user_id = #{params[:learn_user_id]}").page(params[:page]).order("created_at DESC").per(5)
-     # @userDatas = @articleDatas.map(&:learn_user)
+     user_check
      #傳入使用者資料 跟 該 使用者的文章
-     @articleData = Article.where("learn_user_id = #{current_learn_user[:id]}").page(params[:page]).order("created_at DESC").per(5)
-     @articleCount = Article.where("learn_user_id = #{current_learn_user[:id]}").count
-     user = LearnUser.find(current_learn_user[:id])
-     #傳入使用者資料 跟 該 使用者的文章
-     @userData = {email: user[:email], id: user[:id], access_token: user[:access_token]}
+     user = LearnUser.includes(:article).find(current_learn_user[:id])
+     @articleData = user.article.page(0).order("created_at DESC").per(5)
+     @articleCount = user.article.count
     end
   
     def show

@@ -2,13 +2,18 @@
 
 <p>
   <strong>Email:</strong>
-  <%= @user.email %>
+   <%= @learn_user.email %>
 </p>
 
 <p>
-  <strong>Password:</strong>
-  <%= @user.password %>
+  <strong>Create Data </strong>
+  <%= @learn_user.created_at %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<p>
+   <strong>Update Data</strong>
+   <%= @learn_user.updated_at =%>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@learn_user)%>
+<%= link_to 'Back', learn_users_path %>

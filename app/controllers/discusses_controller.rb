@@ -1,10 +1,11 @@
 class DiscussesController < ApplicationController
+  before_action :authenticate_manager!
   before_action :set_discuss, only: [:show, :edit, :update, :destroy]
 
   # GET /discusses
   # GET /discusses.json
   def index
-    @discusses = Discuss.all
+    @discusses = DiscussArticle.all
   end
 
   # GET /discusses/1
@@ -14,7 +15,7 @@ class DiscussesController < ApplicationController
 
   # GET /discusses/new
   def new
-    @discuss = Discuss.new
+    @discuss = DiscussArticle.new
   end
 
   # GET /discusses/1/edit
@@ -24,7 +25,7 @@ class DiscussesController < ApplicationController
   # POST /discusses
   # POST /discusses.json
   def create
-    @discuss = Discuss.new(discuss_params)
+    @discuss = DiscussArticle.new(discuss_params)
 
     respond_to do |format|
       if @discuss.save
@@ -64,7 +65,7 @@ class DiscussesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_discuss
-      @discuss = Discuss.find(params[:id])
+      @discuss = DiscussArticle.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

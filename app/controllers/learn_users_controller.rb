@@ -1,9 +1,12 @@
 class LearnUsersController < ApplicationController
+  before_action :authenticate_manager!
     def index
         @learn_users = LearnUser.all
     end
   
     def show
+      @learn_user = LearnUser.find(params[:id])
+      puts @learn_user.email
     end
     
     def new
@@ -58,4 +61,5 @@ class LearnUsersController < ApplicationController
     end
 
   end
+end
   

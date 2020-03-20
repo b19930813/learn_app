@@ -1,5 +1,7 @@
 class VocabulariesController < ApplicationController
+  before_action :authenticate_manager!
   before_action :set_vocabulary, only: [:show, :edit, :update, :destroy]
+ 
   # GET /vocabularies
   # GET /vocabularies.json
   def index

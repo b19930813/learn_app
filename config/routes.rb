@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :learn_users
   root "pages#index" 
 
-
+#後台網址
   scope  path: "frankgogo" do
     resources :users
     resources :vocabularies
@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     resources :vocabularies, only: [:index, :destroy]
     resources :my_vocabularies
     resources :sessions
-    resources :discusses, only: [:create, :destroy, :show, :index, :update]
+    resources :discusses_article, only: [:create, :destroy, :show, :index, :update]
     resources :responses, only: [:create, :destroy, :show, :index, :update]
     resources :articles, only: [:create, :destroy, :show, :index, :update, :edit]
     resources :my_articles, only: [:index]

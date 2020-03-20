@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function Message(props,level) {
+export default function Message(props) {
     const classes = useStyles();
     const [datas, setDatas] = React.useState({
         messages: [],
@@ -47,10 +47,9 @@ export default function Message(props,level) {
 
    function getDiscuss(){
     axios
-    .get('/api/discusses', {
+    .get('/api/discusses_article', {
         params: {
-            level: props.level,
-            responseID: props.props.articleData.id
+            article_id: props.props.articleData.id
         }
     })
     .then(response => {
@@ -77,11 +76,10 @@ export default function Message(props,level) {
         //打API，後端確認是否登入
         const post = {
             content: content,
-            responseID: props.props.articleData.id,
-            level: 1
+            article_id: props.props.articleData.id,
         }
         axios
-            .post('/api/discusses', post)
+            .post('/api/discusses_article', post)
             .then(response => {
                 if (response.data.state == 200) {
                     alert('留言成功');

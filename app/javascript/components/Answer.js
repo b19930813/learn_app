@@ -6,7 +6,6 @@ import axios from 'axios'
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
-import Message from './Message'
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -92,7 +91,6 @@ export default function Answer(props) {
                 {datas.users[i].email} 於 {answer.created_at.substring(0, 10)} {answer.created_at.substring(11, 19)} 回覆
             </Typography>
             <Divider className={classes.Divider} variant="middle" />
-            {/* <Message props = {props} level = {2}/> */}
         </div>
     )
     return (
